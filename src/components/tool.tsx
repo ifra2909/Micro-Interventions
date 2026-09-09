@@ -76,7 +76,7 @@ function ScoreBars({ scores, max = 4 }: { scores: Record<MechanismId, number>; m
 
 function ReadoutLine({ k, v, vColor = "#1A1918" }: { k: string; v: string; vColor?: string }) {
   return (
-    <p className="font-mono text-[11.5px] leading-relaxed text-sage">
+    <p className="font-mono text-[11.5px] leading-relaxed text-espresso">
       <span className="text-taupe">{k}</span> <span style={{ color: vColor }}>{v}</span>
     </p>
   );
@@ -130,22 +130,22 @@ function ReadoutPanel({ stage, preview, inference, intervention, analysisStage, 
 
         {live && preview && (
           <div>
-            <ReadoutLine k="situation:" v={preview.situation} vColor="#B8D4C8" />
+            <ReadoutLine k="situation:" v={preview.situation} />
             {preview.emotions.length > 0 ? (
               preview.emotions.map((e) => (
-                <ReadoutLine key={e.label} k="emotion:" v={`${e.label} — "${e.words.slice(0, 3).join(", ")}"`} vColor={e.color} />
+                <ReadoutLine key={e.label} k="emotion:" v={`${e.label} — "${e.words.slice(0, 3).join(", ")}"`} />
               ))
             ) : (
-              <ReadoutLine k="emotion:" v="scanning…" vColor="#6E6B65" />
+              <ReadoutLine k="emotion:" v="scanning…" />
             )}
             {preview.triedUnhealthy.length > 0 && (
-              <ReadoutLine k="coping:" v={`↻ ${preview.triedUnhealthy[0]} — we replace, not preach`} vColor="#E8C4B8" />
+              <ReadoutLine k="coping:" v={`↻ ${preview.triedUnhealthy[0]} — we replace, not preach`} />
             )}
             {preview.triedHealthy.length > 0 && (
-              <ReadoutLine k="coping:" v="✓ you've already tried something — building on it" vColor="#B8D4C8" />
+              <ReadoutLine k="coping:" v="✓ you've already tried something — building on it" />
             )}
-            <ReadoutLine k="leading:" v={MECHANISMS[preview.mechanism].label} vColor={MECHANISMS[preview.mechanism].color} />
-            {preview.gateNote && <ReadoutLine k="rule:" v={preview.gateNote} vColor="#E8D4B8" />}
+            <ReadoutLine k="leading:" v={MECHANISMS[preview.mechanism].label} />
+            {preview.gateNote && <ReadoutLine k="rule:" v={preview.gateNote} />}
             <ScoreBars scores={preview.scores} />
             <p className="font-mono text-[11px] text-sage mt-2">▸ live preview — hit decode to commit<span className="caret">▊</span></p>
           </div>
@@ -164,25 +164,25 @@ function ReadoutPanel({ stage, preview, inference, intervention, analysisStage, 
 
         {stage === "session" && inference && intervention && (
           <div className="pop-in">
-            <ReadoutLine k="situation:" v={inference.situation} vColor="#B8D4C8" />
+            <ReadoutLine k="situation:" v={inference.situation} />
             {inference.emotions.slice(0, 2).map((e) => (
-              <ReadoutLine key={e.label} k="emotion:" v={e.label} vColor={e.color} />
+              <ReadoutLine key={e.label} k="emotion:" v={e.label} />
             ))}
             {inference.triedUnhealthy.length > 0 && (
-              <ReadoutLine k="coping:" v={`replacing: ${inference.triedUnhealthy.slice(0, 2).join(", ")}`} vColor="#E8C4B8" />
+              <ReadoutLine k="coping:" v={`replacing: ${inference.triedUnhealthy.slice(0, 2).join(", ")}`} />
             )}
-            <ReadoutLine k="mechanism:" v={MECHANISMS[inference.mechanism].label} vColor={MECHANISMS[inference.mechanism].color} />
-            <ReadoutLine k="delivered:" v={`${intervention.title} · ${intervention.minutes} min`} vColor="#1A1918" />
+            <ReadoutLine k="mechanism:" v={MECHANISMS[inference.mechanism].label} />
+            <ReadoutLine k="delivered:" v={`${intervention.title} · ${intervention.minutes} min`} />
             <ScoreBars scores={inference.scores} />
           </div>
         )}
 
         {stage === "done" && inference && (
           <div className="pop-in font-mono text-[11.5px] leading-[2]">
-            <p className="text-sage">✓ session logged</p>
-            <ReadoutLine k="mechanism:" v={MECHANISMS[inference.mechanism].label} vColor={MECHANISMS[inference.mechanism].color} />
+            <p className="text-espresso">✓ session logged</p>
+            <ReadoutLine k="mechanism:" v={MECHANISMS[inference.mechanism].label} />
             {delta !== null && (
-              <ReadoutLine k="heaviness:" v={`${delta <= 0 ? `${delta}` : `+${delta}`} — ${delta <= 0 ? "lighter. that's the whole game." : "rough round. it still counts."}`} vColor={delta <= 0 ? "#B8D4C8" : "#E8D4B8"} />
+              <ReadoutLine k="heaviness:" v={`${delta <= 0 ? `${delta}` : `+${delta}`} — ${delta <= 0 ? "lighter. that's the whole game." : "rough round. it still counts."}`} />
             )}
             <p className="text-taupe">the tool did its job: you felt enough to act.</p>
           </div>
@@ -402,8 +402,8 @@ export function Tool({ onLogged, launch, onStageChange }: { onLogged: (e: Sessio
 
               <p className="font-mono text-[11px] text-taupe mt-8 leading-relaxed">
                 if this is a crisis and not a bad day —{" "}
-                <a href="tel:9152987821" className="underline hover:text-[#E8C4B8] transition-colors">iCall: 9152987821</a> or{" "}
-                <a href="tel:18602662345" className="underline hover:text-[#E8C4B8] transition-colors">Vandrevala: 1860-2662-345</a>.
+                <a href="tel:9152987821" className="underline hover:text-espresso transition-colors">iCall: 9152987821</a> or{" "}
+                <a href="tel:18602662345" className="underline hover:text-espresso transition-colors">Vandrevala: 1860-2662-345</a>.
                 this is a momentary lever, not a lifeline.
               </p>
             </div>
@@ -429,7 +429,7 @@ export function Tool({ onLogged, launch, onStageChange }: { onLogged: (e: Sessio
               </div>
 
               {inference.gateNote && (
-                <p className="font-mono text-[11px] text-[#E8C4B8] mt-3">▸ {inference.gateNote}</p>
+                <p className="font-mono text-[11px] text-espresso mt-3 bg-[#E8D4B8]/30 px-3 py-1.5 rounded-md inline-block">▸ {inference.gateNote}</p>
               )}
               <p className="text-taupe text-[15px] leading-relaxed mt-4 max-w-xl">{inference.message}</p>
 
@@ -567,7 +567,7 @@ export function Tool({ onLogged, launch, onStageChange }: { onLogged: (e: Sessio
                   <DeltaBar label="after" value={moodAfterVal} color="#B8D4C8" />
                 </div>
                 <div className="flex-1 text-center sm:text-left">
-                  <p className="font-display text-5xl tabular-nums" style={{ color: doneDelta !== null && doneDelta <= 0 ? "#B8D4C8" : "#E8D4B8" }}>
+                  <p className="font-display text-5xl tabular-nums text-espresso">
                     {doneDelta !== null && doneDelta <= 0 ? `−${Math.abs(doneDelta)}` : `+${doneDelta}`}
                   </p>
                   <p className="mono-label mt-1">heaviness delta</p>

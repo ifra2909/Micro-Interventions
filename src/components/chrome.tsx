@@ -51,10 +51,10 @@ export function MechTag({ id, small = false }: { id: MechanismId; small?: boolea
   const m = MECHANISMS[id];
   return (
     <span
-      className={`inline-flex items-center gap-1.5 rounded-full border font-mono uppercase tracking-[0.1em] ${small ? "text-[10px] px-2 py-0.5" : "text-[11px] px-3 py-1"}`}
-      style={{ color: m.color, borderColor: `${m.color}55`, background: `${m.color}18` }}
+      className={`inline-flex items-center gap-1.5 rounded-full font-mono uppercase tracking-[0.1em] ${small ? "text-[10px] px-2.5 py-1" : "text-[11px] px-3 py-1.5"}`}
+      style={{ color: "#1A1918", background: m.color, border: `1px solid ${m.color}` }}
     >
-      <span className="w-1.5 h-1.5 rounded-full" style={{ background: m.color }} />
+      <span className="w-1.5 h-1.5 rounded-full" style={{ background: "#1A1918", opacity: 0.5 }} />
       {m.label}
     </span>
   );
@@ -86,15 +86,15 @@ export function Footer() {
         </div>
         <div>
           <p className="mono-label mb-3">if it's bigger than a bad day</p>
-          <div className="panel p-4">
+          <div className="panel p-4" style={{ background: "#E8C4B815" }}>
             <p className="text-sm text-espresso leading-relaxed">
-              <span className="text-[#E8C4B8] font-medium">India:</span>{" "}
-              <a href="tel:9152987821" className="underline decoration-[#E8C4B8]/40 hover:text-[#E8C4B8] transition-colors">
+              <span className="text-espresso font-medium">India:</span>{" "}
+              <a href="tel:9152987821" className="underline hover:text-espresso transition-colors">
                 iCall: 9152987821
               </a>
               <br />
-              <span className="text-[#E8C4B8] font-medium">Vandrevala Foundation:</span>{" "}
-              <a href="tel:18602662345" className="underline decoration-[#E8C4B8]/40 hover:text-[#E8C4B8] transition-colors">
+              <span className="text-espresso font-medium">Vandrevala Foundation:</span>{" "}
+              <a href="tel:18602662345" className="underline hover:text-espresso transition-colors">
                 1860-2662-345
               </a>
             </p>

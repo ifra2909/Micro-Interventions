@@ -27,7 +27,7 @@ export function SciencePage() {
 
       <Reveal delay={100}>
         <div className="mb-16">
-          <p className="mono-label text-[#E8C4B8] mb-3">the research</p>
+          <p className="mono-label text-espresso mb-3 bg-[#E8C4B8]/30 px-3 py-1.5 rounded-md inline-block">the research</p>
           <h1 className="font-display text-espresso leading-[1.1] text-4xl sm:text-5xl lg:text-6xl mb-6">
             14 interventions.<br />
             <em className="italic text-taupe">backed by science.</em>
@@ -49,7 +49,7 @@ export function SciencePage() {
             <section className="mb-20">
               <div className="flex items-center gap-3 mb-8">
                 <div
-                  className="w-3 h-3 rounded-full"
+                  className="w-4 h-4 rounded-full"
                   style={{ background: mechanism.color, boxShadow: `0 0 12px ${mechanism.color}44` }}
                 />
                 <h2 className="font-display text-espresso text-2xl sm:text-3xl">
@@ -63,7 +63,7 @@ export function SciencePage() {
                   <div
                     key={intervention.id}
                     className="panel p-7"
-                    style={{ borderColor: `${mechanism.color}33` }}
+                    style={{ borderColor: `${mechanism.color}33`, background: `${mechanism.color}10` }}
                   >
                     <div className="flex items-start justify-between gap-4 mb-5">
                       <div className="flex-1">
@@ -85,24 +85,24 @@ export function SciencePage() {
 
                     <div className="space-y-5">
                       <div>
-                        <p className="mono-label mb-2" style={{ color: mechanism.color }}>
+                        <p className="mono-label mb-2 text-espresso">
                           why this works
                         </p>
-                        <p className="text-taupe text-sm leading-relaxed">
+                        <p className="text-espresso text-sm leading-relaxed">
                           {intervention.why}
                         </p>
                       </div>
 
                       <div>
-                        <p className="mono-label mb-3" style={{ color: mechanism.color }}>
+                        <p className="mono-label mb-3 text-espresso">
                           the steps
                         </p>
                         <ol className="space-y-2">
                           {intervention.steps.map((step, i) => (
-                            <li key={i} className="flex items-start gap-3 text-sm text-taupe">
+                            <li key={i} className="flex items-start gap-3 text-sm text-espresso">
                               <span
-                                className="w-5 h-5 rounded-full border flex items-center justify-center shrink-0 mt-0.5 font-mono text-[10px]"
-                                style={{ borderColor: `${mechanism.color}55`, color: mechanism.color }}
+                                className="w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5 font-mono text-[10px] text-espresso"
+                                style={{ background: mechanism.color }}
                               >
                                 {i + 1}
                               </span>
@@ -128,8 +128,8 @@ export function SciencePage() {
       })}
 
       <Reveal>
-        <div className="panel p-8 mt-20">
-          <p className="mono-label text-[#E8C4B8] mb-3">the full picture</p>
+        <div className="panel p-8 mt-20" style={{ background: "#E8C4B815" }}>
+          <p className="mono-label text-espresso mb-3">the full picture</p>
           <h2 className="font-display text-espresso text-2xl sm:text-3xl mb-4">
             standing on the shoulders of
           </h2>

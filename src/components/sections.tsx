@@ -12,27 +12,29 @@ import { Arrow, MechTag, Reveal, SectionHead } from "./chrome";
 
 export function Science() {
   return (
-    <section className="max-w-5xl mx-auto px-5 sm:px-8 py-24">
-      <Reveal>
-        <SectionHead
-          tag="backed by science"
-          title={<>every intervention is<br /><em className="italic text-taupe">research-backed.</em></>}
-          desc="14 micro-interventions drawn from peer-reviewed positive psychology research. Each one is a digital adaptation of an empirically tested technique."
-          color="#E8C4B8"
-        />
-      </Reveal>
-      <Reveal delay={100}>
-        <div className="panel p-7">
-          <p className="text-taupe text-sm leading-relaxed mb-5">
-            Microshift doesn't invent exercises. Every tool here is adapted from published research in positive psychology, 
-            cognitive behavioral therapy, and mindfulness-based interventions. We've distilled decades of clinical research 
-            into 2-5 minute micro-interventions that actually fit into your day.
-          </p>
-          <a href="#/science" className="btn-main px-6 py-2.5 text-sm inline-flex items-center gap-2">
-            view the research <Arrow className="w-4 h-4" />
-          </a>
-        </div>
-      </Reveal>
+    <section className="py-24" style={{ background: "linear-gradient(180deg, #FBF9F5 0%, #F5EFEA 50%, #FBF9F5 100%)" }}>
+      <div className="max-w-5xl mx-auto px-5 sm:px-8">
+        <Reveal>
+          <SectionHead
+            tag="backed by science"
+            title={<>every intervention is<br /><em className="italic text-taupe">research-backed.</em></>}
+            desc="14 micro-interventions drawn from peer-reviewed positive psychology research. Each one is a digital adaptation of an empirically tested technique."
+            color="#1A1918"
+          />
+        </Reveal>
+        <Reveal delay={100}>
+          <div className="panel p-7">
+            <p className="text-taupe text-sm leading-relaxed mb-5">
+              Microshift doesn't invent exercises. Every tool here is adapted from published research in positive psychology, 
+              cognitive behavioral therapy, and mindfulness-based interventions. We've distilled decades of clinical research 
+              into 2-5 minute micro-interventions that actually fit into your day.
+            </p>
+            <a href="#/science" className="btn-main px-6 py-2.5 text-sm inline-flex items-center gap-2">
+              view the research <Arrow className="w-4 h-4" />
+            </a>
+          </div>
+        </Reveal>
+      </div>
     </section>
   );
 }
@@ -56,22 +58,23 @@ const ISNT_LIST = [
 
 export function IsIsNot() {
   return (
-    <section className="max-w-5xl mx-auto px-5 sm:px-8 py-24">
+    <section className="py-24" style={{ background: "linear-gradient(180deg, #FBF9F5 0%, #F2EDE6 50%, #FBF9F5 100%)" }}>
+      <div className="max-w-5xl mx-auto px-5 sm:px-8">
       <Reveal>
         <SectionHead
           tag="Honest disclaimer"
           title={<>what this is.<br /><em className="italic text-taupe">what this isn't.</em></>}
-          color="#B8D4C8"
+          color="#1A1918"
         />
       </Reveal>
       <div className="grid md:grid-cols-2 gap-5">
         <Reveal>
-          <div className="panel p-7 h-full">
-            <p className="mono-label text-sage mb-5">what this is</p>
+          <div className="panel p-7 h-full" style={{ background: "#B8D4C820" }}>
+            <p className="mono-label text-espresso mb-5">what this is</p>
             <ul className="space-y-4">
               {IS_LIST.map((t) => (
-                <li key={t} className="flex items-start gap-3 text-sm text-taupe leading-relaxed">
-                  <span className="mt-0.5 w-5 h-5 rounded-full bg-sage/10 border border-sage/30 text-sage flex items-center justify-center shrink-0">
+                <li key={t} className="flex items-start gap-3 text-sm text-espresso leading-relaxed">
+                  <span className="mt-0.5 w-5 h-5 rounded-full bg-[#B8D4C8] border border-[#B8D4C8] text-espresso flex items-center justify-center shrink-0">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" className="w-3 h-3"><path d="M4 12.5l5 5L20 6.5" /></svg>
                   </span>
                   {t}
@@ -81,12 +84,12 @@ export function IsIsNot() {
           </div>
         </Reveal>
         <Reveal delay={120}>
-          <div className="panel p-7 h-full">
-            <p className="mono-label text-terracotta mb-5">what this isn't</p>
+          <div className="panel p-7 h-full" style={{ background: "#E8C4B820" }}>
+            <p className="mono-label text-espresso mb-5">what this isn't</p>
             <ul className="space-y-4">
               {ISNT_LIST.map((t) => (
-                <li key={t} className="flex items-start gap-3 text-sm text-taupe leading-relaxed">
-                  <span className="mt-0.5 w-5 h-5 rounded-full bg-terracotta/10 border border-terracotta/25 text-terracotta flex items-center justify-center shrink-0">
+                <li key={t} className="flex items-start gap-3 text-sm text-espresso leading-relaxed">
+                  <span className="mt-0.5 w-5 h-5 rounded-full bg-[#E8C4B8] border border-[#E8C4B8] text-espresso flex items-center justify-center shrink-0">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" className="w-3 h-3"><path d="M6 6l12 12M18 6L6 18" /></svg>
                   </span>
                   {t}
@@ -102,6 +105,7 @@ export function IsIsNot() {
           and they respond to small, proven moves."
         </p>
       </Reveal>
+      </div>
     </section>
   );
 }
@@ -122,13 +126,14 @@ export function Log({ entries, onClear }: { entries: SessionEntry[]; onClear: ()
   const maxCount = Math.max(1, ...mechCounts.map((x) => x.n));
 
   return (
-    <section id="log" className="max-w-5xl mx-auto px-5 sm:px-8 py-24">
+    <section id="log" className="py-24" style={{ background: "linear-gradient(180deg, #FBF9F5 0%, #F0EDE8 50%, #FBF9F5 100%)" }}>
+      <div className="max-w-5xl mx-auto px-5 sm:px-8">
       <Reveal>
         <SectionHead
           tag="your log"
           title={<>patterns beat<br /><em className="italic text-taupe">promises.</em></>}
           desc="Every completed session lands here — stored only in this browser. After a few rounds, your personal deficit profile starts showing up."
-          color="#C4B8D4"
+          color="#1A1918"
         />
       </Reveal>
 
@@ -156,7 +161,7 @@ export function Log({ entries, onClear }: { entries: SessionEntry[]; onClear: ()
                   <p className="mono-label mt-0.5">days</p>
                 </div>
                 <div>
-                  <p className="font-display text-4xl" style={{ color: avgDelta <= 0 ? "#B8D4C8" : "#E8D4B8" }}>
+                  <p className="font-display text-4xl text-espresso">
                     {avgDelta <= 0 ? `−${Math.abs(avgDelta).toFixed(1)}` : `+${avgDelta.toFixed(1)}`}
                   </p>
                   <p className="mono-label mt-0.5">avg Δ</p>
@@ -217,11 +222,11 @@ export function Log({ entries, onClear }: { entries: SessionEntry[]; onClear: ()
                         <span className="text-sage">{e.after}</span>
                       </span>
                       <span
-                        className="font-mono text-[10.5px] rounded-full px-2 py-0.5 border shrink-0"
+                        className="font-mono text-[10.5px] rounded-full px-2.5 py-1 shrink-0 text-espresso"
                         style={
                           d <= 0
-                            ? { color: "#B8D4C8", borderColor: "#B8D4C844", background: "#B8D4C810" }
-                            : { color: "#E8D4B8", borderColor: "#E8D4B844", background: "#E8D4B810" }
+                            ? { background: "#B8D4C8" }
+                            : { background: "#E8D4B8" }
                         }
                       >
                         {d <= 0 ? `−${Math.abs(d)}` : `+${d}`}
@@ -234,6 +239,7 @@ export function Log({ entries, onClear }: { entries: SessionEntry[]; onClear: ()
           </Reveal>
         </div>
       )}
+      </div>
     </section>
   );
 }
