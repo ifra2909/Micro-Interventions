@@ -53,7 +53,7 @@ function syntheticInference(iv: Intervention): Inference {
 
 function ScoreBars({ scores, max = 4 }: { scores: Record<MechanismId, number>; max?: number }) {
   const rows = MECHANISM_ORDER.filter((m) => scores[m] > 0);
-  if (rows.length === 0) return <p className="font-mono text-[11px] text-zinc-500">no dominant pattern — routing to clarity</p>;
+  if (rows.length === 0) return <p className="font-mono text-[11px] text-taupe">no dominant pattern — routing to clarity</p>;
   return (
     <div className="space-y-1.5 mt-2">
       {rows.map((m, i) => (
@@ -61,23 +61,23 @@ function ScoreBars({ scores, max = 4 }: { scores: Record<MechanismId, number>; m
           <span className="font-mono text-[10px] uppercase tracking-wider w-[92px] shrink-0" style={{ color: MECHANISMS[m].color }}>
             {MECHANISMS[m].label}
           </span>
-          <span className="flex-1 h-[4px] rounded-full bg-white/10 overflow-hidden">
+          <span className="flex-1 h-[4px] rounded-full bg-border overflow-hidden">
             <span
               className="width-grow block h-full rounded-full"
               style={{ width: `${Math.min(100, (scores[m] / max) * 100)}%`, background: MECHANISMS[m].color, animationDelay: `${i * 90}ms` }}
             />
           </span>
-          <span className="font-mono text-[10px] text-zinc-500 w-4 text-right">{scores[m]}</span>
+          <span className="font-mono text-[10px] text-taupe w-4 text-right">{scores[m]}</span>
         </div>
       ))}
     </div>
   );
 }
 
-function ReadoutLine({ k, v, vColor = "#ffffff" }: { k: string; v: string; vColor?: string }) {
+function ReadoutLine({ k, v, vColor = "#1A1918" }: { k: string; v: string; vColor?: string }) {
   return (
-    <p className="font-mono text-[11.5px] leading-relaxed">
-      <span className="text-zinc-500">{k}</span> <span style={{ color: vColor }}>{v}</span>
+    <p className="font-mono text-[11.5px] leading-relaxed text-sage">
+      <span className="text-taupe">{k}</span> <span style={{ color: vColor }}>{v}</span>
     </p>
   );
 }
@@ -96,10 +96,10 @@ function ReadoutPanel({ stage, preview, inference, intervention, analysisStage, 
   const inf = stage === "session" || stage === "done" ? inference : live ? preview : null;
 
   const orbColor =
-    stage === "done" ? "#7a9e7e"
+    stage === "done" ? "#7BA89F"
     : stage === "session" && inference ? MECHANISMS[inference.mechanism].color
-    : live && preview ? (preview.arousal > 0.45 ? "#e8a87c" : preview.arousal > 0.2 ? "#d4b896" : "#7a9e7e")
-    : "#7a9e7e";
+    : live && preview ? (preview.arousal > 0.45 ? "#C26D53" : preview.arousal > 0.2 ? "#C9A876" : "#7BA89F")
+    : "#7BA89F";
   const orbSpeed = live && preview ? (preview.arousal > 0.45 ? 3.4 : preview.arousal > 0.2 ? 5.5 : 8) : 7.5;
   const orbLabel =
     stage === "done" ? "settled"
@@ -113,49 +113,49 @@ function ReadoutPanel({ stage, preview, inference, intervention, analysisStage, 
       <div className="inset-screen w-full p-5 min-h-[180px]">
         <div className="flex items-center justify-between mb-3">
           <span className="mono-label">inference readout</span>
-          <span className={`w-1.5 h-1.5 rounded-full ${stage === "analyzing" ? "bg-amber-400" : "bg-emerald-400"} ${stage !== "done" ? "animate-pulse" : ""}`} />
+          <span className={`w-1.5 h-1.5 rounded-full ${stage === "analyzing" ? "bg-terracotta" : "bg-sage"} ${stage !== "done" ? "animate-pulse" : ""}`} />
         </div>
 
         {stage === "input" && !live && (
-          <div className="font-mono text-[11.5px] leading-[2] text-zinc-400">
-            <p className="text-zinc-500">▸ system idle — awaiting input</p>
-            <p className="text-zinc-500">three signals feed the match:</p>
-            <p><span className="text-emerald-400">01</span> the situation you describe</p>
-            <p><span className="text-blue-400">02</span> the emotion language you use</p>
-            <p><span className="text-amber-400">03</span> what you've already tried</p>
-            <p className="text-zinc-500">sequence: safety → clarity → growth</p>
-            <p className="text-emerald-400">type anything — messy is welcome<span className="caret">▊</span></p>
+          <div className="font-mono text-[11.5px] leading-[2] text-taupe">
+            <p className="text-taupe">▸ system idle — awaiting input</p>
+            <p className="text-taupe">three signals feed the match:</p>
+            <p><span className="text-sage">01</span> the situation you describe</p>
+            <p><span className="text-[#8BA7B8]">02</span> the emotion language you use</p>
+            <p><span className="text-terracotta">03</span> what you've already tried</p>
+            <p className="text-taupe">sequence: safety → clarity → growth</p>
+            <p className="text-sage">type anything — messy is welcome<span className="caret">▊</span></p>
           </div>
         )}
 
         {live && preview && (
           <div>
-            <ReadoutLine k="situation:" v={preview.situation} vColor="#10b981" />
+            <ReadoutLine k="situation:" v={preview.situation} vColor="#7BA89F" />
             {preview.emotions.length > 0 ? (
               preview.emotions.map((e) => (
                 <ReadoutLine key={e.label} k="emotion:" v={`${e.label} — "${e.words.slice(0, 3).join(", ")}"`} vColor={e.color} />
               ))
             ) : (
-              <ReadoutLine k="emotion:" v="scanning…" vColor="#71717a" />
+              <ReadoutLine k="emotion:" v="scanning…" vColor="#6E6B65" />
             )}
             {preview.triedUnhealthy.length > 0 && (
-              <ReadoutLine k="coping:" v={`↻ ${preview.triedUnhealthy[0]} — we replace, not preach`} vColor="#f59e0b" />
+              <ReadoutLine k="coping:" v={`↻ ${preview.triedUnhealthy[0]} — we replace, not preach`} vColor="#C26D53" />
             )}
             {preview.triedHealthy.length > 0 && (
-              <ReadoutLine k="coping:" v="✓ you've already tried something — building on it" vColor="#10b981" />
+              <ReadoutLine k="coping:" v="✓ you've already tried something — building on it" vColor="#7BA89F" />
             )}
             <ReadoutLine k="leading:" v={MECHANISMS[preview.mechanism].label} vColor={MECHANISMS[preview.mechanism].color} />
-            {preview.gateNote && <ReadoutLine k="rule:" v={preview.gateNote} vColor="#d97706" />}
+            {preview.gateNote && <ReadoutLine k="rule:" v={preview.gateNote} vColor="#C9A876" />}
             <ScoreBars scores={preview.scores} />
-            <p className="font-mono text-[11px] text-emerald-400 mt-2">▸ live preview — hit decode to commit<span className="caret">▊</span></p>
+            <p className="font-mono text-[11px] text-sage mt-2">▸ live preview — hit decode to commit<span className="caret">▊</span></p>
           </div>
         )}
 
         {stage === "analyzing" && (
-          <div className="font-mono text-[11.5px] leading-[2] text-zinc-400">
+          <div className="font-mono text-[11.5px] leading-[2] text-taupe">
             {ANALYSIS_LINES.slice(0, analysisStage + 1).map((l, i) => (
-              <p key={l} className={i === analysisStage ? "text-white" : "text-zinc-500"}>
-                <span className="text-emerald-400">▸</span> {l}
+              <p key={l} className={i === analysisStage ? "text-espresso" : "text-taupe"}>
+                <span className="text-sage">▸</span> {l}
                 {i === analysisStage && <span className="caret">▊</span>}
               </p>
             ))}
@@ -164,31 +164,31 @@ function ReadoutPanel({ stage, preview, inference, intervention, analysisStage, 
 
         {stage === "session" && inference && intervention && (
           <div className="pop-in">
-            <ReadoutLine k="situation:" v={inference.situation} vColor="#10b981" />
+            <ReadoutLine k="situation:" v={inference.situation} vColor="#7BA89F" />
             {inference.emotions.slice(0, 2).map((e) => (
               <ReadoutLine key={e.label} k="emotion:" v={e.label} vColor={e.color} />
             ))}
             {inference.triedUnhealthy.length > 0 && (
-              <ReadoutLine k="coping:" v={`replacing: ${inference.triedUnhealthy.slice(0, 2).join(", ")}`} vColor="#f59e0b" />
+              <ReadoutLine k="coping:" v={`replacing: ${inference.triedUnhealthy.slice(0, 2).join(", ")}`} vColor="#C26D53" />
             )}
             <ReadoutLine k="mechanism:" v={MECHANISMS[inference.mechanism].label} vColor={MECHANISMS[inference.mechanism].color} />
-            <ReadoutLine k="delivered:" v={`${intervention.title} · ${intervention.minutes} min`} vColor="#ffffff" />
+            <ReadoutLine k="delivered:" v={`${intervention.title} · ${intervention.minutes} min`} vColor="#1A1918" />
             <ScoreBars scores={inference.scores} />
           </div>
         )}
 
         {stage === "done" && inference && (
           <div className="pop-in font-mono text-[11.5px] leading-[2]">
-            <p className="text-emerald-400">✓ session logged</p>
+            <p className="text-sage">✓ session logged</p>
             <ReadoutLine k="mechanism:" v={MECHANISMS[inference.mechanism].label} vColor={MECHANISMS[inference.mechanism].color} />
             {delta !== null && (
-              <ReadoutLine k="heaviness:" v={`${delta <= 0 ? `${delta}` : `+${delta}`} — ${delta <= 0 ? "lighter. that's the whole game." : "rough round. it still counts."}`} vColor={delta <= 0 ? "#10b981" : "#d97706"} />
+              <ReadoutLine k="heaviness:" v={`${delta <= 0 ? `${delta}` : `+${delta}`} — ${delta <= 0 ? "lighter. that's the whole game." : "rough round. it still counts."}`} vColor={delta <= 0 ? "#7BA89F" : "#C9A876"} />
             )}
-            <p className="text-zinc-500">the tool did its job: you felt enough to act.</p>
+            <p className="text-taupe">the tool did its job: you felt enough to act.</p>
           </div>
         )}
       </div>
-      <p className="text-center text-[11px] font-mono text-zinc-500 -mt-1">
+      <p className="text-center text-[11px] font-mono text-taupe -mt-1">
         this panel is the transparency layer — same signals a clinician would screen for
       </p>
     </div>
@@ -216,8 +216,8 @@ function MoodCheck({
     <div className={`panel p-6 transition-opacity ${confirmed ? "opacity-70" : ""}`}>
       <div className="flex items-baseline justify-between gap-4 mb-3">
         <p className="mono-label">{label}</p>
-        <p className="font-display text-3xl text-white tabular-nums">
-          {value}<span className="text-zinc-500 text-base font-body font-normal"> /10</span>
+        <p className="font-display text-3xl text-espresso tabular-nums">
+          {value}<span className="text-taupe text-base font-body font-normal"> /10</span>
         </p>
       </div>
       <input type="range" min={0} max={10} value={value} onChange={(e) => onChange(+e.target.value)} className="mood" disabled={confirmed} />
@@ -236,7 +236,7 @@ function MoodCheck({
 
 /* ---------------- the tool ---------------- */
 
-export function Tool({ onLogged, launch }: { onLogged: (e: SessionEntry) => void; launch: Launch | null }) {
+export function Tool({ onLogged, launch, onStageChange }: { onLogged: (e: SessionEntry) => void; launch: Launch | null; onStageChange?: (stage: Stage) => void }) {
   const [text, setText] = useState("");
   const [stage, setStage] = useState<Stage>("input");
   const [inference, setInference] = useState<Inference | null>(null);
@@ -263,6 +263,10 @@ export function Tool({ onLogged, launch }: { onLogged: (e: SessionEntry) => void
     const t = setTimeout(() => setAnalysisStage((s) => s + 1), 420);
     return () => clearTimeout(t);
   }, [stage, analysisStage]);
+
+  useEffect(() => {
+    if (onStageChange) onStageChange(stage);
+  }, [stage, onStageChange]);
 
   useEffect(() => {
     if (!launch) return;
@@ -350,15 +354,15 @@ export function Tool({ onLogged, launch }: { onLogged: (e: SessionEntry) => void
         <div className="lg:col-span-7">
           {stage === "input" && (
             <div className="pop-in">
-              <h1 className="font-display text-white mt-5 leading-[1.05] text-[clamp(2.5rem,6vw,4.2rem)]">
-                what's weighing<br />on you <em className="italic text-zinc-400">right now?</em>
+              <h1 className="font-display text-espresso mt-5 leading-[1.05] text-[clamp(2.5rem,6vw,4.2rem)]">
+                what's weighing<br />on you <em className="italic text-taupe">right now?</em>
               </h1>
-              <p className="text-zinc-400 text-[15px] sm:text-base leading-relaxed mt-5 max-w-xl">
+              <p className="text-taupe text-[15px] sm:text-base leading-relaxed mt-5 max-w-xl">
                 Type out whatever is stressing you out right now. Be it messy, vague, or unfiltered. 
                 We'll identify what your brain actually needs and give you a quick step to handle it.
               </p>
 
-              <div className="panel p-2 mt-10 focus-within:border-white/20 transition-colors">
+              <div className="panel p-2 mt-10 focus-within:border-taupe transition-colors">
                 <textarea
                   ref={taRef}
                   value={text}
@@ -368,10 +372,10 @@ export function Tool({ onLogged, launch }: { onLogged: (e: SessionEntry) => void
                   }}
                   rows={4}
                   placeholder="type it messy. 'idk everything is a lot' absolutely counts."
-                  className="w-full bg-transparent px-4 py-3 text-white text-[15px] leading-relaxed resize-none outline-none placeholder:text-zinc-500 min-h-[110px]"
+                  className="w-full bg-transparent px-4 py-3 text-espresso text-[15px] leading-relaxed resize-none outline-none placeholder:text-taupe min-h-[110px]"
                 />
                 <div className="flex items-center justify-between px-3 pb-2">
-                  <span className="font-mono text-[11px] text-zinc-500">{text.length}/600 · ⌘↵ to decode</span>
+                  <span className="font-mono text-[11px] text-taupe">{text.length}/600 · ⌘↵ to decode</span>
                   <button onClick={submit} disabled={text.trim().length < 8} className="btn-main px-6 py-2.5 text-[15px] flex items-center gap-2">
                     decode it <Arrow className="w-4 h-4" />
                   </button>
@@ -388,7 +392,7 @@ export function Tool({ onLogged, launch }: { onLogged: (e: SessionEntry) => void
                         setText(c.text);
                         taRef.current?.focus();
                       }}
-                      className="btn-ghost px-4 py-2 text-sm hover:text-white transition-colors"
+                      className="btn-ghost px-4 py-2 text-sm hover:text-espresso transition-colors"
                     >
                       {c.label}
                     </button>
@@ -396,10 +400,10 @@ export function Tool({ onLogged, launch }: { onLogged: (e: SessionEntry) => void
                 </div>
               </div>
 
-              <p className="font-mono text-[11px] text-zinc-500 mt-8 leading-relaxed">
+              <p className="font-mono text-[11px] text-taupe mt-8 leading-relaxed">
                 if this is a crisis and not a bad day —{" "}
-                <a href="tel:9152987821" className="underline hover:text-amber transition-colors">iCall: 9152987821</a> or{" "}
-                <a href="tel:18602662345" className="underline hover:text-amber transition-colors">Vandrevala: 1860-2662-345</a>.
+                <a href="tel:9152987821" className="underline hover:text-terracotta transition-colors">iCall: 9152987821</a> or{" "}
+                <a href="tel:18602662345" className="underline hover:text-terracotta transition-colors">Vandrevala: 1860-2662-345</a>.
                 this is a momentary lever, not a lifeline.
               </p>
             </div>
@@ -409,7 +413,7 @@ export function Tool({ onLogged, launch }: { onLogged: (e: SessionEntry) => void
             <div className="pop-in" key={intervention.id}>
               <div className="flex items-center justify-between gap-4">
                 <p className="mono-label truncate">
-                  you said: <span className="text-zinc-400 normal-case tracking-normal">"{manual ? "picked from library" : text.trim().slice(0, 72)}{!manual && text.trim().length > 72 ? "…" : ""}"</span>
+                  you said: <span className="text-taupe normal-case tracking-normal">"{manual ? "picked from library" : text.trim().slice(0, 72)}{!manual && text.trim().length > 72 ? "…" : ""}"</span>
                 </p>
                 <button onClick={restart} className="btn-ghost px-4 py-1.5 text-[12px] font-mono shrink-0">
                   start over
@@ -417,17 +421,17 @@ export function Tool({ onLogged, launch }: { onLogged: (e: SessionEntry) => void
               </div>
 
               <div className="mt-7">
-                <h2 className="font-display text-white leading-tight text-3xl sm:text-4xl tracking-tight">{inference.headline}</h2>
+                <h2 className="font-display text-espresso leading-tight text-3xl sm:text-4xl tracking-tight">{inference.headline}</h2>
                 <div className="flex items-center gap-3 mt-3">
                   <MechTag id={inference.mechanism} />
-                  <span className="font-mono text-[11px] text-zinc-500">{MECHANISMS[inference.mechanism].need}</span>
+                  <span className="font-mono text-[11px] text-taupe">{MECHANISMS[inference.mechanism].need}</span>
                 </div>
               </div>
 
               {inference.gateNote && (
-                <p className="font-mono text-[11px] text-amber-400 mt-3">▸ {inference.gateNote}</p>
+                <p className="font-mono text-[11px] text-terracotta mt-3">▸ {inference.gateNote}</p>
               )}
-              <p className="text-zinc-400 text-[15px] leading-relaxed mt-4 max-w-xl">{inference.message}</p>
+              <p className="text-taupe text-[15px] leading-relaxed mt-4 max-w-xl">{inference.message}</p>
 
               <div className="mt-8">
                 <MoodCheck
@@ -442,24 +446,24 @@ export function Tool({ onLogged, launch }: { onLogged: (e: SessionEntry) => void
 
               {/* intervention card */}
               <div className="panel mt-6 overflow-hidden">
-                <div className="px-7 pt-7 pb-6 border-b border-white/10 flex items-start justify-between gap-4 flex-wrap">
+                <div className="px-7 pt-7 pb-6 border-b border-border flex items-start justify-between gap-4 flex-wrap">
                   <div>
                     <p className="mono-label mb-1.5" style={{ color: MECHANISMS[intervention.mechanism].color }}>
                       your micro-intervention · restores {MECHANISMS[intervention.mechanism].need}
                     </p>
-                    <h3 className="font-display text-white text-2xl tracking-tight">{intervention.title}</h3>
-                    <p className="font-mono text-[11px] text-zinc-500 mt-1.5 leading-relaxed max-w-md">
+                    <h3 className="font-display text-espresso text-2xl tracking-tight">{intervention.title}</h3>
+                    <p className="font-mono text-[11px] text-taupe mt-1.5 leading-relaxed max-w-md">
                       evidence: {intervention.evidence}
                     </p>
                   </div>
-                  <span className="font-mono text-[11px] text-zinc-400 border border-white/10 rounded-full px-3 py-1.5 shrink-0">
+                  <span className="font-mono text-[11px] text-taupe border border-border rounded-full px-3 py-1.5 shrink-0">
                     ~{intervention.minutes} min
                   </span>
                 </div>
 
                 <div className="px-7 py-6">
                   <p className="mono-label mb-2">why this one works</p>
-                  <p className="text-zinc-400 text-sm leading-relaxed max-w-xl">{intervention.why}</p>
+                  <p className="text-taupe text-sm leading-relaxed max-w-xl">{intervention.why}</p>
                 </div>
 
                 <div className="px-7 pb-6">
@@ -472,12 +476,12 @@ export function Tool({ onLogged, launch }: { onLogged: (e: SessionEntry) => void
                           <button
                             onClick={() => setStepsDone(stepsDone.map((v, j) => (j === i ? !v : v)))}
                             className={`w-full text-left flex items-start gap-3 px-4 py-3 rounded-xl border transition-all duration-200 ${
-                              done ? "border-white/10 bg-zinc-900" : "border-white/10 bg-zinc-900/50 hover:-translate-y-0.5"
+                              done ? "border-border bg-linen" : "border-border bg-cream hover:-translate-y-0.5"
                             }`}
                           >
                             <span
                               className={`w-6 h-6 rounded-full border flex items-center justify-center shrink-0 mt-0.5 transition-colors ${
-                                done ? "bg-emerald-500 border-emerald-500 text-white" : "border-white/20 text-zinc-500"
+                                done ? "bg-sage border-sage text-linen" : "border-border text-taupe"
                               }`}
                             >
                               {done ? (
@@ -488,7 +492,7 @@ export function Tool({ onLogged, launch }: { onLogged: (e: SessionEntry) => void
                                 <span className="font-mono text-[11px]">{i + 1}</span>
                               )}
                             </span>
-                            <span className={`text-sm leading-relaxed transition-colors ${done ? "text-zinc-500 line-through decoration-emerald-500/30" : "text-white"}`}>
+                            <span className={`text-sm leading-relaxed transition-colors ${done ? "text-taupe line-through decoration-sage/30" : "text-espresso"}`}>
                               {s}
                             </span>
                           </button>
@@ -506,13 +510,13 @@ export function Tool({ onLogged, launch }: { onLogged: (e: SessionEntry) => void
                 {/* progress + finish */}
                 <div className="px-7 pb-7">
                   <div className="flex items-center gap-3 mb-4">
-                    <div className="flex-1 h-1.5 rounded-full bg-white/10 overflow-hidden">
+                    <div className="flex-1 h-1.5 rounded-full bg-border overflow-hidden">
                       <div
                         className="h-full rounded-full transition-all duration-500"
                         style={{ width: `${progress * 100}%`, background: MECHANISMS[intervention.mechanism].color }}
                       />
                     </div>
-                    <span className="font-mono text-[11px] text-zinc-500">{Math.round(progress * 100)}%</span>
+                    <span className="font-mono text-[11px] text-taupe">{Math.round(progress * 100)}%</span>
                   </div>
 
                   {completeReady && (
@@ -524,7 +528,7 @@ export function Tool({ onLogged, launch }: { onLogged: (e: SessionEntry) => void
                     </div>
                   )}
                   {!completeReady && (
-                    <p className="font-mono text-[11px] text-zinc-500">
+                    <p className="font-mono text-[11px] text-taupe">
                       finish the exercise above to unlock the after-check.
                     </p>
                   )}
@@ -533,7 +537,7 @@ export function Tool({ onLogged, launch }: { onLogged: (e: SessionEntry) => void
 
               {/* alt + closer */}
               <div className="flex items-center justify-between gap-4 mt-5 flex-wrap">
-                <p className="font-mono text-[11px] text-zinc-500 italic max-w-sm">"{intervention.closer}"</p>
+                <p className="font-mono text-[11px] text-taupe italic max-w-sm">"{intervention.closer}"</p>
                 {inference.alt && !manual && (
                   <button
                     onClick={() => swapTo(inference.alt!)}
@@ -549,25 +553,25 @@ export function Tool({ onLogged, launch }: { onLogged: (e: SessionEntry) => void
           {stage === "done" && inference && intervention && (
             <div className="pop-in">
               <p className="mono-label">session logged · {new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</p>
-              <h2 className="font-display text-white mt-3 leading-[1.05] text-[clamp(2.2rem,5vw,3.5rem)]">
-                unclenched<span className="text-emerald-400">.</span>
+              <h2 className="font-display text-espresso mt-3 leading-[1.05] text-[clamp(2.2rem,5vw,3.5rem)]">
+                unclenched<span className="text-sage">.</span>
               </h2>
-              <p className="text-zinc-400 mt-4 max-w-xl text-[15px] leading-relaxed">
+              <p className="text-taupe mt-4 max-w-xl text-[15px] leading-relaxed">
                 You didn't solve the situation — you restored the mechanism underneath it. That's the whole
-                trick: feel better <em className="text-white not-italic font-medium">first</em>, then handle it. Because you can.
+                trick: feel better <em className="text-espresso not-italic font-medium">first</em>, then handle it. Because you can.
               </p>
 
               <div className="panel mt-10 p-7 flex flex-col sm:flex-row items-center gap-8">
                 <div className="flex items-end gap-6">
-                  <DeltaBar label="before" value={moodBefore ?? moodBeforeVal} color="#f59e0b" />
-                  <DeltaBar label="after" value={moodAfterVal} color="#10b981" />
+                  <DeltaBar label="before" value={moodBefore ?? moodBeforeVal} color="#C9A876" />
+                  <DeltaBar label="after" value={moodAfterVal} color="#7BA89F" />
                 </div>
                 <div className="flex-1 text-center sm:text-left">
-                  <p className="font-display text-5xl tabular-nums" style={{ color: doneDelta !== null && doneDelta <= 0 ? "#10b981" : "#d97706" }}>
+                  <p className="font-display text-5xl tabular-nums" style={{ color: doneDelta !== null && doneDelta <= 0 ? "#7BA89F" : "#C9A876" }}>
                     {doneDelta !== null && doneDelta <= 0 ? `−${Math.abs(doneDelta)}` : `+${doneDelta}`}
                   </p>
                   <p className="mono-label mt-1">heaviness delta</p>
-                  <p className="font-mono text-[12px] text-zinc-400 mt-3 leading-relaxed">
+                  <p className="font-mono text-[12px] text-taupe mt-3 leading-relaxed">
                     mechanism: <span style={{ color: MECHANISMS[inference.mechanism].color }}>{MECHANISMS[inference.mechanism].label}</span> · tool: {intervention.title}
                     <br />
                     "{intervention.closer}"
@@ -608,13 +612,13 @@ export function Tool({ onLogged, launch }: { onLogged: (e: SessionEntry) => void
 function DeltaBar({ label, value, color }: { label: string; value: number; color: string }) {
   return (
     <div className="flex flex-col items-center gap-2">
-      <div className="h-32 w-12 rounded-lg bg-zinc-900 border border-white/10 flex items-end overflow-hidden">
+      <div className="h-32 w-12 rounded-lg bg-cream border border-border flex items-end overflow-hidden">
         <div
           className="w-full rounded-t-md bar-rise"
-          style={{ height: `${Math.max(8, value * 10)}%`, background: `${color}aa`, animationDelay: label === "after" ? "250ms" : "0ms" }}
+          style={{ height: `${Math.max(8, value * 10)}%`, background: `${color}cc`, animationDelay: label === "after" ? "250ms" : "0ms" }}
         />
       </div>
-      <span className="font-mono text-[11px] text-zinc-500">
+      <span className="font-mono text-[11px] text-taupe">
         {label} <span style={{ color }}>{value}</span>
       </span>
     </div>

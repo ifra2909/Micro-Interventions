@@ -47,18 +47,18 @@ export function BreathWidget({ onProgress }: WidgetProps) {
   return (
     <div className="flex flex-col items-center gap-5 py-4">
       <div className="relative w-40 h-40 flex items-center justify-center">
-        <span className="pulse-ring absolute inset-0 rounded-full border border-emerald-500/30" />
+        <span className="pulse-ring absolute inset-0 rounded-full border border-sage/30" />
         <div
           className="w-28 h-28 rounded-full"
           style={{
-            background: "radial-gradient(circle at 35% 30%, #10b981cc, #10b98155 55%, #10b9811a)",
-            boxShadow: "0 0 40px #10b98130, inset 0 -8px 20px rgba(0,0,0,0.3)",
+            background: "radial-gradient(circle at 35% 30%, #7BA89Fcc, #7BA89F55 55%, #7BA89F1a)",
+            boxShadow: "0 0 40px #7BA89F30, inset 0 -8px 20px rgba(0,0,0,0.08)",
             transform: `scale(${running || round > 0 || done ? p.scale : 1})`,
             transition: `transform ${p.dur}s cubic-bezier(0.45, 0, 0.35, 1)`,
           }}
         />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
-          <span className="font-body font-medium text-white text-sm px-4">{done ? "well done" : running ? p.label : "ready when you are"}</span>
+          <span className="font-body font-medium text-espresso text-sm px-4">{done ? "well done" : running ? p.label : "ready when you are"}</span>
           <span className="mono-label mt-1">round {Math.min(round + (done ? 0 : 1), TARGET_ROUNDS)} / {TARGET_ROUNDS}</span>
         </div>
       </div>
@@ -73,7 +73,81 @@ export function BreathWidget({ onProgress }: WidgetProps) {
             skip
           </button>
         )}
-        {done && <p className="font-mono text-emerald-400 text-sm">✓ nervous system: notified</p>}
+        {done && <p className="font-mono text-sage text-sm">✓ nervous system: notified</p>}
+      </div>
+    </div>
+  );
+}
+
+/* ---------------- affect labeling ---------------- */
+
+const LABEL_BOARD: { word: string; color: string }[] = [
+  { word: "anxious", color: "#8BA7B8" }, { word: "overwhelmed", color: "#7BA89F" }, { word: "sad", color: "#8BA7B8" }, { word: "angry", color: "#C26D53" },
+  { word: "ashamed", color: "#C28B8B" }, { word: "lonely", color: "#A89BC2" }, { word: "numb", color: "#9B8AA6" }, { word: "exhausted", color: "#C9A876" },
+  { word: "guilty", color: "#C28B8B" }, { word: "scared", color: "#8BA7B8" }, { word: "resentful", color: "#C26D53" }, { word: "empty", color: "#9B8AA6" },
+  { word: "embarrassed", color: "#C28B8B" }, { word: "worried", color: "#8BA7B8" }, { word: "frustrated", color: "#C26D53" }, { word: "drained", color: "#C9A876" },
+  { word: "left out", color: "#A89BC2" }, { word: "dreading", color: "#8BA7B8" }, { word: "inadequate", color: "#C28B8B" }, { word: "flat", color: "#9B8AA6" },
+];
+
+export function LabelWidget({ onProgress }: WidgetProps) {
+  const [picked, setPicked] = useState<string[]>([]);
+  const [intensity, setIntensity] = useState(6);
+  const [because, setBecause] = useState("");
+
+  useEffect(() => {
+    const p = (picked.length > 0 ? 0.45 : 0) + (because.trim().length > 3 ? 0.55 : picked.length >= 3 ? 0.25 : 0);
+    onProgress(clamp01(p));
+  }, [picked, because, onProgress]);
+
+  const toggle = (w: string) =>
+    setPicked((prev) => (prev.includes(w) ? prev.filter((x) => x !== w) : prev.length >= 3 ? prev : [...prev, w]));
+
+  return (
+    <div className="space-y-5 py-2">
+      <div>
+        <p className="mono-label mb-2">which words flinch? pick up to 3</p>
+        <div className="flex flex-wrap gap-2">
+          {LABEL_BOARD.map(({ word, color }) => {
+            const on = picked.includes(word);
+            return (
+              <button
+                key={word}
+                onClick={() => toggle(word)}
+                className="px-3.5 py-1.5 rounded-full border text-sm transition-all duration-200"
+                style={
+                  on
+                    ? { background: `${color}18`, borderColor: `${color}66`, color }
+                    : { borderColor: "#E5E0D8", color: "#6E6B65" }
+                }
+              >
+                {word}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+      {picked.length > 0 && (
+        <div className="pop-in">
+          <p className="mono-label mb-2">
+            how loud is it? <span className="text-[#8BA7B8] font-mono normal-case tracking-normal">{intensity}/10</span>
+          </p>
+          <input type="range" min={1} max={10} value={intensity} onChange={(e) => setIntensity(+e.target.value)} className="mood" />
+        </div>
+      )}
+      <div>
+        <p className="mono-label mb-2">finish the sentence — one line is plenty</p>
+        <div className="inset-screen p-4">
+          <p className="text-sm text-taupe mb-2 font-mono">
+            right now I feel <span className="text-[#8BA7B8]">{picked.length ? picked.join(" + ") : "…"}</span>
+          </p>
+          <textarea
+            value={because}
+            onChange={(e) => setBecause(e.target.value)}
+            rows={2}
+            placeholder="because…"
+            className="w-full bg-transparent border-b border-border focus:border-[#8BA7B8] outline-none text-espresso text-sm resize-none placeholder:text-taupe transition-colors"
+          />
+        </div>
       </div>
     </div>
   );
@@ -110,8 +184,8 @@ export function ChecklistWidget({ intervention, onProgress }: WidgetProps) {
                   }}
                   className={`px-3.5 py-2 rounded-full border text-sm transition-all duration-200 ${
                     on
-                      ? "bg-emerald-500/10 border-emerald-500/50 text-emerald-400"
-                      : "border-white/10 text-zinc-400 hover:border-emerald-500/40 hover:text-white"
+                      ? "bg-sage/10 border-sage/50 text-sage"
+                      : "border-border text-taupe hover:border-sage/40 hover:text-espresso"
                   }`}
                 >
                   {on ? "✓ " : ""}{item}
@@ -121,80 +195,6 @@ export function ChecklistWidget({ intervention, onProgress }: WidgetProps) {
           </div>
         </div>
       ))}
-    </div>
-  );
-}
-
-/* ---------------- affect labeling ---------------- */
-
-const LABEL_BOARD: { word: string; color: string }[] = [
-  ["anxious", "#8fb8d4"], ["overwhelmed", "#7a9e7e"], ["sad", "#8fb8d4"], ["angry", "#e8a87c"],
-  ["ashamed", "#d4a5a5"], ["lonely", "#b8a5d4"], ["numb", "#8a7ab8"], ["exhausted", "#d4b896"],
-  ["guilty", "#d4a5a5"], ["scared", "#8fb8d4"], ["resentful", "#e8a87c"], ["empty", "#8a7ab8"],
-  ["embarrassed", "#d4a5a5"], ["worried", "#8fb8d4"], ["frustrated", "#e8a87c"], ["drained", "#d4b896"],
-  ["left out", "#b8a5d4"], ["dreading", "#8fb8d4"], ["inadequate", "#d4a5a5"], ["flat", "#8a7ab8"],
-].map(([word, color]) => ({ word, color }));
-
-export function LabelWidget({ onProgress }: WidgetProps) {
-  const [picked, setPicked] = useState<string[]>([]);
-  const [intensity, setIntensity] = useState(6);
-  const [because, setBecause] = useState("");
-
-  useEffect(() => {
-    const p = (picked.length > 0 ? 0.45 : 0) + (because.trim().length > 3 ? 0.55 : picked.length >= 3 ? 0.25 : 0);
-    onProgress(clamp01(p));
-  }, [picked, because, onProgress]);
-
-  const toggle = (w: string) =>
-    setPicked((prev) => (prev.includes(w) ? prev.filter((x) => x !== w) : prev.length >= 3 ? prev : [...prev, w]));
-
-  return (
-    <div className="space-y-5 py-2">
-      <div>
-        <p className="mono-label mb-2">which words flinch? pick up to 3</p>
-        <div className="flex flex-wrap gap-2">
-          {LABEL_BOARD.map(({ word, color }) => {
-            const on = picked.includes(word);
-            return (
-              <button
-                key={word}
-                onClick={() => toggle(word)}
-                className="px-3.5 py-1.5 rounded-full border text-sm transition-all duration-200"
-                style={
-                  on
-                    ? { background: `${color}18`, borderColor: `${color}66`, color }
-                    : { borderColor: "rgba(255,255,255,0.1)", color: "#a1a1aa" }
-                }
-              >
-                {word}
-              </button>
-            );
-          })}
-        </div>
-      </div>
-      {picked.length > 0 && (
-        <div className="pop-in">
-          <p className="mono-label mb-2">
-            how loud is it? <span className="text-blue-400 font-mono normal-case tracking-normal">{intensity}/10</span>
-          </p>
-          <input type="range" min={1} max={10} value={intensity} onChange={(e) => setIntensity(+e.target.value)} className="mood" />
-        </div>
-      )}
-      <div>
-        <p className="mono-label mb-2">finish the sentence — one line is plenty</p>
-        <div className="inset-screen p-4">
-          <p className="text-sm text-zinc-400 mb-2 font-mono">
-            right now I feel <span className="text-blue-400">{picked.length ? picked.join(" + ") : "…"}</span>
-          </p>
-          <textarea
-            value={because}
-            onChange={(e) => setBecause(e.target.value)}
-            rows={2}
-            placeholder="because…"
-            className="w-full bg-transparent border-b border-white/10 focus:border-blue-400 outline-none text-white text-sm resize-none placeholder:text-zinc-500 transition-colors"
-          />
-        </div>
-      </div>
     </div>
   );
 }
@@ -217,8 +217,8 @@ export function BodyScanWidget({ onProgress }: WidgetProps) {
   return (
     <div className="space-y-4 py-2">
       <div>
-        <p className="mono-label mb-2">scan area {area + 1} of {BODY_AREAS.length}: <span className="text-white normal-case tracking-normal">{BODY_AREAS[area]}</span></p>
-        <p className="text-sm text-zinc-400 mb-3">what do you notice? tight, warm, heavy, buzzing, numb, or neutral?</p>
+        <p className="mono-label mb-2">scan area {area + 1} of {BODY_AREAS.length}: <span className="text-espresso normal-case tracking-normal">{BODY_AREAS[area]}</span></p>
+        <p className="text-sm text-taupe mb-3">what do you notice? tight, warm, heavy, buzzing, numb, or neutral?</p>
         <div className="flex flex-wrap gap-2">
           {SENSATIONS.map((s) => (
             <button
@@ -226,8 +226,8 @@ export function BodyScanWidget({ onProgress }: WidgetProps) {
               onClick={() => setSensation(s)}
               className={`px-3.5 py-1.5 rounded-full border text-sm transition-all ${
                 sensation === s
-                  ? "bg-emerald-500/10 border-emerald-500/50 text-emerald-400"
-                  : "border-white/10 text-zinc-400 hover:border-emerald-500/40"
+                  ? "bg-sage/10 border-sage/50 text-sage"
+                  : "border-border text-taupe hover:border-sage/40"
               }`}
             >
               {s}
@@ -244,7 +244,7 @@ export function BodyScanWidget({ onProgress }: WidgetProps) {
                 key={b}
                 onClick={() => setBreaths(b)}
                 className={`w-10 h-10 rounded-full border flex items-center justify-center text-sm font-mono transition-all ${
-                  breaths >= b ? "bg-emerald-500/10 border-emerald-500/50 text-emerald-400" : "border-white/20 text-zinc-500"
+                  breaths >= b ? "bg-sage/10 border-sage/50 text-sage" : "border-border text-taupe"
                 }`}
               >
                 {b}
@@ -257,7 +257,7 @@ export function BodyScanWidget({ onProgress }: WidgetProps) {
             </button>
           )}
           {area === BODY_AREAS.length - 1 && breaths >= 3 && (
-            <p className="font-mono text-emerald-400 text-sm">✓ scan complete</p>
+            <p className="font-mono text-sage text-sm">✓ scan complete</p>
           )}
         </div>
       )}
@@ -284,19 +284,19 @@ export function GratitudeWidget({ onProgress }: WidgetProps) {
       {rows.map((r, i) => (
         <div key={i} className="inset-screen p-3.5">
           <p className="mono-label mb-2">
-            <span className="text-amber-400">good thing #{i + 1}</span>
+            <span className="text-terracotta">good thing #{i + 1}</span>
           </p>
           <input
             value={r.what}
             onChange={(e) => setRows(rows.map((x, j) => (j === i ? { ...x, what: e.target.value } : x)))}
             placeholder="anything remotely good — the bar is on the floor"
-            className="w-full bg-transparent text-white text-sm outline-none placeholder:text-zinc-500"
+            className="w-full bg-transparent text-espresso text-sm outline-none placeholder:text-taupe"
           />
           <input
             value={r.why}
             onChange={(e) => setRows(rows.map((x, j) => (j === i ? { ...x, why: e.target.value } : x)))}
             placeholder="why did it happen? (take some credit)"
-            className="w-full bg-transparent text-zinc-400 text-[13px] outline-none placeholder:text-zinc-500 mt-2 border-t border-white/10 pt-2"
+            className="w-full bg-transparent text-taupe text-[13px] outline-none placeholder:text-taupe mt-2 border-t border-border pt-2"
           />
         </div>
       ))}
@@ -330,22 +330,22 @@ export function SavorWidget({ onProgress }: WidgetProps) {
           value={thing}
           onChange={(e) => setThing(e.target.value)}
           placeholder="e.g. this cup of tea, the sunlight, a song playing…"
-          className="w-full inset-screen p-4 bg-transparent text-white text-sm outline-none placeholder:text-zinc-500"
+          className="w-full inset-screen p-4 bg-transparent text-espresso text-sm outline-none placeholder:text-taupe"
         />
       </div>
       {thing.trim() && !done && (
         <div className="pop-in text-center">
           <div className="relative w-32 h-32 mx-auto mb-4">
-            <div className="absolute inset-0 rounded-full border-4 border-white/10" />
+            <div className="absolute inset-0 rounded-full border-4 border-border" />
             <div
-              className="absolute inset-0 rounded-full border-4 border-emerald-500"
+              className="absolute inset-0 rounded-full border-4 border-sage"
               style={{ clipPath: `polygon(50% 50%, 50% 0%, ${timer >= 15 ? "100% 0%" : "50% 0%"} ${timer >= 15 ? (timer >= 30 ? "100% 100%" : `${50 + (timer - 15) / 15 * 50}% 100%`) : "50% 0%"})` }}
             />
             <div className="absolute inset-0 flex items-center justify-center">
-              <span className="font-display text-3xl text-white">{60 - timer}s</span>
+              <span className="font-display text-3xl text-espresso">{60 - timer}s</span>
             </div>
           </div>
-          <p className="text-sm text-zinc-400">give it your full attention. if your mind wanders, gently return.</p>
+          <p className="text-sm text-taupe">give it your full attention. if your mind wanders, gently return.</p>
           {timer >= 60 && (
             <button onClick={() => setDone(true)} className="btn-main px-6 py-2.5 text-sm mt-4">
               that was good ✓
@@ -353,7 +353,7 @@ export function SavorWidget({ onProgress }: WidgetProps) {
           )}
         </div>
       )}
-      {done && <p className="font-mono text-emerald-400 text-sm text-center">✓ you just stretched one small good moment</p>}
+      {done && <p className="font-mono text-sage text-sm text-center">✓ you just stretched one small good moment</p>}
     </div>
   );
 }
@@ -376,13 +376,13 @@ export function SmallWinWidget({ onProgress }: WidgetProps) {
           value={task}
           onChange={(e) => setTask(e.target.value)}
           placeholder="e.g. make the bed, reply to one message, wash one dish…"
-          className="w-full inset-screen p-4 bg-transparent text-white text-sm outline-none placeholder:text-zinc-500"
+          className="w-full inset-screen p-4 bg-transparent text-espresso text-sm outline-none placeholder:text-taupe"
           disabled={done}
         />
       </div>
       {task.trim() && !done && (
         <div className="pop-in text-center">
-          <p className="text-sm text-zinc-400 mb-4">do that one thing — fully, right now. then come back.</p>
+          <p className="text-sm text-taupe mb-4">do that one thing — fully, right now. then come back.</p>
           <button onClick={() => setDone(true)} className="btn-main px-6 py-2.5 text-sm">
             i did it ✓
           </button>
@@ -390,8 +390,8 @@ export function SmallWinWidget({ onProgress }: WidgetProps) {
       )}
       {done && (
         <div className="pop-in inset-screen p-5 text-center">
-          <p className="font-display text-xl text-white mb-2">"I did that. I made something happen."</p>
-          <p className="font-mono text-emerald-400 text-sm">✓ competence signal: received</p>
+          <p className="font-display text-xl text-espresso mb-2">"I did that. I made something happen."</p>
+          <p className="font-mono text-sage text-sm">✓ competence signal: received</p>
         </div>
       )}
     </div>
@@ -412,8 +412,8 @@ export function BestSelfWidget({ onProgress }: WidgetProps) {
 
   const field = (label: string, val: string, set: (v: string) => void, ph: string) => (
     <div className="inset-screen p-3.5">
-      <p className="mono-label mb-2 text-amber-400">{label}</p>
-      <textarea value={val} onChange={(e) => set(e.target.value)} rows={2} placeholder={ph} className="w-full bg-transparent text-white text-sm outline-none resize-none placeholder:text-zinc-500" />
+      <p className="mono-label mb-2 text-terracotta">{label}</p>
+      <textarea value={val} onChange={(e) => set(e.target.value)} rows={2} placeholder={ph} className="w-full bg-transparent text-espresso text-sm outline-none resize-none placeholder:text-taupe" />
     </div>
   );
 
@@ -441,10 +441,10 @@ export function CompassionWidget({ onProgress }: WidgetProps) {
     <button
       onClick={onClick}
       className={`w-full text-left px-4 py-3 rounded-xl border transition-all duration-200 flex items-center gap-3 ${
-        on ? "bg-rose-500/10 border-rose-500/40 text-white" : "border-white/10 text-zinc-400 hover:border-rose-500/30"
+        on ? "bg-[#C28B8B]/10 border-[#C28B8B]/40 text-espresso" : "border-border text-taupe hover:border-[#C28B8B]/30"
       }`}
     >
-      <span className={`w-5 h-5 rounded-full border flex items-center justify-center shrink-0 ${on ? "bg-rose-500 border-rose-500 text-white" : "border-white/20"}`}>
+      <span className={`w-5 h-5 rounded-full border flex items-center justify-center shrink-0 ${on ? "bg-[#C28B8B] border-[#C28B8B] text-linen" : "border-border"}`}>
         {on && <span className="text-[11px] font-bold">✓</span>}
       </span>
       {label}
@@ -453,24 +453,24 @@ export function CompassionWidget({ onProgress }: WidgetProps) {
 
   return (
     <div className="space-y-3 py-2">
-      {stageBtn(s1, () => setS1(!s1), <span><span className="text-rose-400 font-medium">Mindfulness.</span> Say it plainly: "this is a moment of struggle."</span>)}
-      {stageBtn(s2, () => setS2(!s2), <span><span className="text-rose-400 font-medium">Common humanity.</span> Someone in your life has stood exactly here. You're not uniquely broken.</span>)}
+      {stageBtn(s1, () => setS1(!s1), <span><span className="text-[#C28B8B] font-medium">Mindfulness.</span> Say it plainly: "this is a moment of struggle."</span>)}
+      {stageBtn(s2, () => setS2(!s2), <span><span className="text-[#C28B8B] font-medium">Common humanity.</span> Someone in your life has stood exactly here. You're not uniquely broken.</span>)}
       <div>
         <p className="mono-label mb-2">
-          <span className="text-rose-400">kindness.</span> what would you say to a close friend in this exact situation?
+          <span className="text-[#C28B8B]">kindness.</span> what would you say to a close friend in this exact situation?
         </p>
         <textarea
           value={msg}
           onChange={(e) => setMsg(e.target.value)}
           rows={3}
           placeholder="hey — first of all, that sounds genuinely hard…"
-          className="w-full inset-screen p-4 bg-transparent text-white text-sm outline-none resize-none placeholder:text-zinc-500"
+          className="w-full inset-screen p-4 bg-transparent text-espresso text-sm outline-none resize-none placeholder:text-taupe"
         />
       </div>
       {msg.trim().length >= 20 && (
-        <div className="pop-in inset-screen p-4 border-rose-500/20">
-          <p className="mono-label mb-2 text-rose-400">now read it back — addressed to you</p>
-          <p className="text-[15px] text-white leading-relaxed italic">"{msg.trim()}"</p>
+        <div className="pop-in inset-screen p-4 border-[#C28B8B]/20">
+          <p className="mono-label mb-2 text-[#C28B8B]">now read it back — addressed to you</p>
+          <p className="text-[15px] text-espresso leading-relaxed italic">"{msg.trim()}"</p>
           <p className="mono-label mt-3">— you, to you. keep that voice on speed dial.</p>
         </div>
       )}
@@ -493,10 +493,10 @@ export function HumanityWidget({ onProgress }: WidgetProps) {
     <button
       onClick={onClick}
       className={`w-full text-left px-4 py-3 rounded-xl border transition-all duration-200 flex items-center gap-3 ${
-        on ? "bg-violet-500/10 border-violet-500/40 text-white" : "border-white/10 text-zinc-400 hover:border-violet-500/30"
+        on ? "bg-[#A89BC2]/10 border-[#A89BC2]/40 text-espresso" : "border-border text-taupe hover:border-[#A89BC2]/30"
       }`}
     >
-      <span className={`w-5 h-5 rounded-full border flex items-center justify-center shrink-0 ${on ? "bg-violet-500 border-violet-500 text-white" : "border-white/20"}`}>
+      <span className={`w-5 h-5 rounded-full border flex items-center justify-center shrink-0 ${on ? "bg-[#A89BC2] border-[#A89BC2] text-linen" : "border-border"}`}>
         {on && <span className="text-[11px] font-bold">✓</span>}
       </span>
       {label}
@@ -506,9 +506,9 @@ export function HumanityWidget({ onProgress }: WidgetProps) {
   return (
     <div className="space-y-3 py-2">
       {stageBtn(s1, () => setS1(!s1), "Think of what you're struggling with right now.")}
-      {stageBtn(s2, () => setS2(!s2), <span>Say: <span className="text-violet-400 font-medium">"This is a moment of struggle. Struggle is part of being human."</span></span>)}
+      {stageBtn(s2, () => setS2(!s2), <span>Say: <span className="text-[#A89BC2] font-medium">"This is a moment of struggle. Struggle is part of being human."</span></span>)}
       {stageBtn(s3, () => setS3(!s3), "Take one slow breath. You are not alone in this experience.")}
-      {s3 && <p className="font-mono text-violet-400 text-sm text-center pt-2">✓ you're not uniquely broken. you're human.</p>}
+      {s3 && <p className="font-mono text-[#A89BC2] text-sm text-center pt-2">✓ you're not uniquely broken. you're human.</p>}
     </div>
   );
 }
@@ -532,7 +532,7 @@ export function LovingKindnessWidget({ onProgress }: WidgetProps) {
           value={person}
           onChange={(e) => setPerson(e.target.value)}
           placeholder="a friend, family member, pet…"
-          className="w-full inset-screen p-4 bg-transparent text-white text-sm outline-none placeholder:text-zinc-500"
+          className="w-full inset-screen p-4 bg-transparent text-espresso text-sm outline-none placeholder:text-taupe"
         />
       </div>
       {person.trim() && (
@@ -543,7 +543,7 @@ export function LovingKindnessWidget({ onProgress }: WidgetProps) {
               key={i}
               onClick={() => setPhrases(i + 1)}
               className={`w-full text-left px-4 py-2.5 rounded-lg border text-sm transition-all ${
-                phrases > i ? "bg-violet-500/10 border-violet-500/40 text-white" : "border-white/10 text-zinc-400 hover:border-violet-500/30"
+                phrases > i ? "bg-[#A89BC2]/10 border-[#A89BC2]/40 text-espresso" : "border-border text-taupe hover:border-[#A89BC2]/30"
               }`}
             >
               {phrase}
@@ -556,10 +556,10 @@ export function LovingKindnessWidget({ onProgress }: WidgetProps) {
           <button
             onClick={() => setSelf(!self)}
             className={`w-full text-left px-4 py-3 rounded-xl border transition-all flex items-center gap-3 ${
-              self ? "bg-violet-500/10 border-violet-500/40 text-white" : "border-white/10 text-zinc-400 hover:border-violet-500/30"
+              self ? "bg-[#A89BC2]/10 border-[#A89BC2]/40 text-espresso" : "border-border text-taupe hover:border-[#A89BC2]/30"
             }`}
           >
-            <span className={`w-5 h-5 rounded-full border flex items-center justify-center shrink-0 ${self ? "bg-violet-500 border-violet-500 text-white" : "border-white/20"}`}>
+            <span className={`w-5 h-5 rounded-full border flex items-center justify-center shrink-0 ${self ? "bg-[#A89BC2] border-[#A89BC2] text-linen" : "border-border"}`}>
               {self && <span className="text-[11px] font-bold">✓</span>}
             </span>
             extend the same wish to yourself
@@ -598,7 +598,7 @@ export function ReachoutWidget({ onProgress }: WidgetProps) {
               key={w}
               onClick={() => setWho(w)}
               className={`px-3.5 py-1.5 rounded-full border text-sm transition-all ${
-                who === w ? "bg-violet-500/10 border-violet-500/50 text-violet-400" : "border-white/10 text-zinc-400 hover:border-violet-500/40"
+                who === w ? "bg-[#A89BC2]/10 border-[#A89BC2]/50 text-[#A89BC2]" : "border-border text-taupe hover:border-[#A89BC2]/40"
               }`}
             >
               {w}
@@ -610,7 +610,7 @@ export function ReachoutWidget({ onProgress }: WidgetProps) {
         <p className="mono-label mb-2">two lines max. starters if you're stuck:</p>
         <div className="flex flex-wrap gap-2 mb-2">
           {STARTERS.map((s, i) => (
-            <button key={i} onClick={() => setMsg(s)} className="text-[11px] font-mono text-zinc-500 border border-white/10 rounded-full px-3 py-1 hover:text-violet-400 hover:border-violet-500/40 transition-colors">
+            <button key={i} onClick={() => setMsg(s)} className="text-[11px] font-mono text-taupe border border-border rounded-full px-3 py-1 hover:text-[#A89BC2] hover:border-[#A89BC2]/40 transition-colors">
               starter {i + 1}
             </button>
           ))}
@@ -620,16 +620,16 @@ export function ReachoutWidget({ onProgress }: WidgetProps) {
           onChange={(e) => setMsg(e.target.value)}
           rows={2}
           placeholder={`to ${who ?? "them"}…`}
-          className="w-full inset-screen p-4 bg-transparent text-white text-sm outline-none resize-none placeholder:text-zinc-500"
+          className="w-full inset-screen p-4 bg-transparent text-espresso text-sm outline-none resize-none placeholder:text-taupe"
         />
       </div>
       <button
         onClick={() => setSent(!sent)}
         className={`flex items-center gap-3 px-4 py-3 rounded-xl border w-full transition-all ${
-          sent ? "bg-violet-500/10 border-violet-500/40 text-white" : "border-white/10 text-zinc-400 hover:border-violet-500/30"
+          sent ? "bg-[#A89BC2]/10 border-[#A89BC2]/40 text-espresso" : "border-border text-taupe hover:border-[#A89BC2]/30"
         }`}
       >
-        <span className={`w-5 h-5 rounded-md border flex items-center justify-center ${sent ? "bg-violet-500 border-violet-500 text-white" : "border-white/20"}`}>
+        <span className={`w-5 h-5 rounded-md border flex items-center justify-center ${sent ? "bg-[#A89BC2] border-[#A89BC2] text-linen" : "border-border"}`}>
           {sent && <span className="text-[11px] font-bold">✓</span>}
         </span>
         I actually sent it <span className="mono-label normal-case tracking-normal">(the send is the intervention)</span>
@@ -657,7 +657,7 @@ export function SilverLiningWidget({ onProgress }: WidgetProps) {
           onChange={(e) => setStressor(e.target.value)}
           rows={2}
           placeholder="what's been weighing on you?"
-          className="w-full inset-screen p-4 bg-transparent text-white text-sm outline-none resize-none placeholder:text-zinc-500"
+          className="w-full inset-screen p-4 bg-transparent text-espresso text-sm outline-none resize-none placeholder:text-taupe"
         />
       </div>
       {stressor.trim() && (
@@ -668,7 +668,7 @@ export function SilverLiningWidget({ onProgress }: WidgetProps) {
             onChange={(e) => setBenefit(e.target.value)}
             rows={2}
             placeholder="Even though this is hard, one thing that has come from it is…"
-            className="w-full inset-screen p-4 bg-transparent text-white text-sm outline-none resize-none placeholder:text-zinc-500"
+            className="w-full inset-screen p-4 bg-transparent text-espresso text-sm outline-none resize-none placeholder:text-taupe"
           />
         </div>
       )}
@@ -698,7 +698,7 @@ export function ValuesWidget({ onProgress }: WidgetProps) {
               key={v}
               onClick={() => setValue(v)}
               className={`px-4 py-2 rounded-full border text-sm transition-all ${
-                value === v ? "bg-amber-500/10 border-amber-500/50 text-amber-400" : "border-white/10 text-zinc-400 hover:border-amber-500/40"
+                value === v ? "bg-terracotta/10 border-terracotta/50 text-terracotta" : "border-border text-taupe hover:border-terracotta/40"
               }`}
             >
               {v}
@@ -708,12 +708,12 @@ export function ValuesWidget({ onProgress }: WidgetProps) {
       </div>
       {value && (
         <div className="pop-in">
-          <p className="mono-label mb-2">what is one tiny action you could take in the next hour that would be you living <span className="text-amber-400">{value}</span>?</p>
+          <p className="mono-label mb-2">what is one tiny action you could take in the next hour that would be you living <span className="text-terracotta">{value}</span>?</p>
           <input
             value={action}
             onChange={(e) => setAction(e.target.value)}
             placeholder="e.g. send a kind text, be honest about how I feel, take 5 minutes to be present…"
-            className="w-full inset-screen p-4 bg-transparent text-white text-sm outline-none placeholder:text-zinc-500"
+            className="w-full inset-screen p-4 bg-transparent text-espresso text-sm outline-none placeholder:text-taupe"
           />
         </div>
       )}

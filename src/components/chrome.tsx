@@ -6,14 +6,14 @@ import { MECHANISMS, type MechanismId } from "../data";
 
 export function Header({ sessionCount }: { sessionCount: number }) {
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-black/50 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-border bg-linen/80 backdrop-blur-md">
       <div className="max-w-5xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between gap-4">
         <a href="#" className="flex items-baseline gap-2">
-          <span className="font-display text-[26px] text-white">Microshift</span>
+          <span className="font-display text-[26px] text-espresso">Microshift</span>
         </a>
         <div className="flex items-center gap-3">
           {sessionCount > 0 && (
-            <span className="mono-label text-zinc-400 border border-white/10 rounded-full px-3 py-1">
+            <span className="mono-label text-taupe border border-border rounded-full px-3 py-1">
               {sessionCount} session{sessionCount === 1 ? "" : "s"} logged
             </span>
           )}
@@ -34,15 +34,15 @@ export function Reveal({ children, className = "", delay = 0 }: { children: Reac
   );
 }
 
-export function SectionHead({ tag, title, desc, color = "#ffffff" }: { tag: string; title: ReactNode; desc?: string; color?: string }) {
+export function SectionHead({ tag, title, desc, color = "#1A1918" }: { tag: string; title: ReactNode; desc?: string; color?: string }) {
   return (
     <div className="max-w-2xl mb-10">
       <p className="mono-label flex items-center gap-2">
         <span className="inline-block w-2 h-2 rounded-full" style={{ background: color }} />
         {tag}
       </p>
-      <h2 className="font-display text-white mt-3 leading-[1.1] text-3xl sm:text-4xl lg:text-5xl">{title}</h2>
-      {desc && <p className="text-zinc-400 mt-4 text-[15px] leading-relaxed">{desc}</p>}
+      <h2 className="font-display text-espresso mt-3 leading-[1.1] text-3xl sm:text-4xl lg:text-5xl">{title}</h2>
+      {desc && <p className="text-taupe mt-4 text-[15px] leading-relaxed">{desc}</p>}
     </div>
   );
 }
@@ -52,7 +52,7 @@ export function MechTag({ id, small = false }: { id: MechanismId; small?: boolea
   return (
     <span
       className={`inline-flex items-center gap-1.5 rounded-full border font-mono uppercase tracking-[0.1em] ${small ? "text-[10px] px-2 py-0.5" : "text-[11px] px-3 py-1"}`}
-      style={{ color: m.color, borderColor: `${m.color}44`, background: `${m.color}15` }}
+      style={{ color: m.color, borderColor: `${m.color}55`, background: `${m.color}18` }}
     >
       <span className="w-1.5 h-1.5 rounded-full" style={{ background: m.color }} />
       {m.label}
@@ -75,11 +75,11 @@ export const Arrow = ({ className = "w-4 h-4" }: { className?: string }) => (
 
 export function Footer() {
   return (
-    <footer className="border-t border-white/10 mt-24">
+    <footer className="border-t border-border mt-24">
       <div className="max-w-5xl mx-auto px-5 sm:px-8 py-16 grid gap-10 md:grid-cols-2">
         <div>
-          <p className="font-display text-2xl text-white">Microshift</p>
-          <p className="text-zinc-400 text-sm mt-3 leading-relaxed max-w-xs">
+          <p className="font-display text-2xl text-espresso">Microshift</p>
+          <p className="text-taupe text-sm mt-3 leading-relaxed max-w-xs">
             Evidence-based emotional regulation for everyday modern stress. Not therapy, not a diagnosis,
             not another chatbot — just a better ten minutes.
           </p>
@@ -87,14 +87,14 @@ export function Footer() {
         <div>
           <p className="mono-label mb-3">if it's bigger than a bad day</p>
           <div className="panel p-4">
-            <p className="text-sm text-white leading-relaxed">
-              <span className="text-amber font-medium">India:</span>{" "}
-              <a href="tel:9152987821" className="underline decoration-amber/40 hover:text-amber transition-colors">
+            <p className="text-sm text-espresso leading-relaxed">
+              <span className="text-terracotta font-medium">India:</span>{" "}
+              <a href="tel:9152987821" className="underline decoration-terracotta/40 hover:text-terracotta transition-colors">
                 iCall: 9152987821
               </a>
               <br />
-              <span className="text-amber font-medium">Vandrevala Foundation:</span>{" "}
-              <a href="tel:18602662345" className="underline decoration-amber/40 hover:text-amber transition-colors">
+              <span className="text-terracotta font-medium">Vandrevala Foundation:</span>{" "}
+              <a href="tel:18602662345" className="underline decoration-terracotta/40 hover:text-terracotta transition-colors">
                 1860-2662-345
               </a>
             </p>

@@ -21,7 +21,7 @@ export const MECHANISMS: Record<MechanismId, Mechanism> = {
     id: "safety",
     label: "safety",
     need: "nervous system regulation",
-    color: "#10b981",
+    color: "#7BA89F",
     gate: 1,
     blurb: "the alarm is ringing. nothing else lands until the body knows you're safe.",
   },
@@ -29,7 +29,7 @@ export const MECHANISMS: Record<MechanismId, Mechanism> = {
     id: "clarity",
     label: "clarity",
     need: "emotional labeling",
-    color: "#3b82f6",
+    color: "#8BA7B8",
     gate: 2,
     blurb: "the feeling has no name yet. naming it measurably turns the volume down.",
   },
@@ -37,35 +37,35 @@ export const MECHANISMS: Record<MechanismId, Mechanism> = {
     id: "affect",
     label: "positive affect",
     need: "positivity refill",
-    color: "#f59e0b",
+    color: "#D4896F",
     blurb: "your good-feeling reservoir is running on fumes. everything reads as gray.",
   },
   agency: {
     id: "agency",
     label: "agency",
     need: "sense of control",
-    color: "#d97706",
+    color: "#C9A876",
     blurb: "the ache isn't the task — it's feeling like the wheel slipped out of your hands.",
   },
   self: {
     id: "self",
     label: "self-compassion",
     need: "a kinder inner voice",
-    color: "#ec4899",
+    color: "#C28B8B",
     blurb: "the inner critic is chairing the meeting right now. time to take back the mic.",
   },
   connection: {
     id: "connection",
     label: "connection",
     need: "human contact",
-    color: "#8b5cf6",
+    color: "#A89BC2",
     blurb: "humans regulate through other humans. one tiny bridge works faster than you'd think.",
   },
   meaning: {
     id: "meaning",
     label: "meaning",
     need: "a bigger why",
-    color: "#6366f1",
+    color: "#9B8AA6",
     blurb: "not broken — undernourished on purpose. reconnect today to something bigger.",
   },
 };
@@ -369,42 +369,42 @@ export interface EmotionFamily {
 
 export const EMOTION_FAMILIES: EmotionFamily[] = [
   {
-    id: "anxious", label: "anxious / afraid", color: "#3b82f6",
+    id: "anxious", label: "anxious / afraid", color: "#8BA7B8",
     words: ["anxious", "worried", "scared", "dread", "on edge", "panic", "nervous", "jumpy"],
     signals: ["anxious", "anxiety", "worried", "worrying", "scared", "afraid", "dread", "panic", "panick", "nervous", "on edge", "jumpy", "paranoid", "terrified", "fear"],
   },
   {
-    id: "sad", label: "sad / heavy", color: "#3b82f6",
+    id: "sad", label: "sad / heavy", color: "#8BA7B8",
     words: ["sad", "heavy", "down", "blue", "heartbroken", "grieving", "melancholy"],
     signals: ["sad", "sadness", "depressed", "down", "heartbroken", "heart broke", "grieving", "grief", "crying", "cry", "tears", "miserable", "heavy heart"],
   },
   {
-    id: "angry", label: "angry / irritated", color: "#f59e0b",
+    id: "angry", label: "angry / irritated", color: "#C26D53",
     words: ["angry", "furious", "irritated", "resentful", "frustrated", "fed up"],
     signals: ["angry", "anger", "furious", "pissed", "irritat", "resent", "frustrat", "fed up", "annoyed", "rage", "mad at"],
   },
   {
-    id: "shame", label: "ashamed / embarrassed", color: "#ec4899",
+    id: "shame", label: "ashamed / embarrassed", color: "#C28B8B",
     words: ["ashamed", "embarrassed", "guilty", "cringe", "exposed", "humiliated"],
     signals: ["ashamed", "shame", "embarrass", "guilty", "guilt", "cringe", "humiliat", "mortified", "exposed"],
   },
   {
-    id: "lonely", label: "lonely / unseen", color: "#8b5cf6",
+    id: "lonely", label: "lonely / unseen", color: "#A89BC2",
     words: ["lonely", "unseen", "left out", "invisible", "homesick", "missed"],
     signals: ["lonely", "loneliness", "alone", "left out", "invisible", "unseen", "isolated", "homesick", "no one", "nobody"],
   },
   {
-    id: "overwhelm", label: "overwhelmed / flooded", color: "#10b981",
+    id: "overwhelm", label: "overwhelmed / flooded", color: "#7BA89F",
     words: ["overwhelmed", "flooded", "drowning", "too much", "buried", "swamped"],
     signals: ["overwhelm", "too much", "drowning", "flooded", "buried", "swamped", "everything at once", "can't cope", "cant cope"],
   },
   {
-    id: "numb", label: "numb / flat", color: "#6366f1",
+    id: "numb", label: "numb / flat", color: "#9B8AA6",
     words: ["numb", "empty", "flat", "blank", "detached", "meh"],
     signals: ["numb", "empty", "flat", "blank", "detached", "nothing", "meh", "don't feel", "dont feel", "can't feel", "cant feel"],
   },
   {
-    id: "tired", label: "drained / burned out", color: "#d97706",
+    id: "tired", label: "drained / burned out", color: "#C9A876",
     words: ["exhausted", "drained", "burned out", "wired", "depleted", "spent"],
     signals: ["exhaust", "drained", "burnt out", "burned out", "burnout", "tired", "wired", "depleted", "no energy", "spent"],
   },
@@ -426,11 +426,11 @@ export const LABEL_WORDS: { word: string; family: string }[] = EMOTION_FAMILIES.
 );
 
 export const LABEL_BOARD: { word: string; color: string }[] = [
-  ["anxious", "#3b82f6"], ["overwhelmed", "#10b981"], ["sad", "#3b82f6"], ["angry", "#f59e0b"],
-  ["ashamed", "#ec4899"], ["lonely", "#8b5cf6"], ["numb", "#6366f1"], ["exhausted", "#d97706"],
-  ["guilty", "#ec4899"], ["scared", "#3b82f6"], ["resentful", "#f59e0b"], ["empty", "#6366f1"],
-  ["embarrassed", "#ec4899"], ["worried", "#3b82f6"], ["frustrated", "#f59e0b"], ["drained", "#d97706"],
-  ["left out", "#8b5cf6"], ["dreading", "#3b82f6"], ["inadequate", "#ec4899"], ["flat", "#6366f1"],
+  ["anxious", "#8BA7B8"], ["overwhelmed", "#7BA89F"], ["sad", "#8BA7B8"], ["angry", "#C26D53"],
+  ["ashamed", "#C28B8B"], ["lonely", "#A89BC2"], ["numb", "#9B8AA6"], ["exhausted", "#C9A876"],
+  ["guilty", "#C28B8B"], ["scared", "#8BA7B8"], ["resentful", "#C26D53"], ["empty", "#9B8AA6"],
+  ["embarrassed", "#C28B8B"], ["worried", "#8BA7B8"], ["frustrated", "#C26D53"], ["drained", "#C9A876"],
+  ["left out", "#A89BC2"], ["dreading", "#8BA7B8"], ["inadequate", "#C28B8B"], ["flat", "#9B8AA6"],
 ].map(([word, color]) => ({ word, color }));
 
 export const CITATIONS = [

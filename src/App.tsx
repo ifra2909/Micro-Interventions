@@ -10,10 +10,11 @@ import { type SessionEntry } from "./data";
 export default function App() {
   const [log, setLog] = useLocalStorage<SessionEntry[]>("ppis-log-v1", []);
   const [launch, setLaunch] = useState<Launch | null>(null);
+  const [inSession, setInSession] = useState(false);
 
   return (
     <HashRouter>
-      <div className="min-h-screen font-body text-white bg-bg">
+      <div className="min-h-screen font-body text-espresso bg-linen">
         <Header sessionCount={log.length} />
         <Routes>
           <Route
@@ -23,10 +24,15 @@ export default function App() {
                 <Tool
                   onLogged={(e) => setLog((prev) => [e, ...prev])}
                   launch={launch}
+                  onStageChange={(stage) => setInSession(stage !== "input")}
                 />
-                <Science />
-                <Log entries={log} onClear={() => setLog([])} />
-                <IsIsNot />
+                {!inSession && (
+                  <>
+                    <Science />
+                    <Log entries={log} onClear={() => setLog([])} />
+                    <IsIsNot />
+                  </>
+                )}
               </main>
             }
           />
