@@ -6,14 +6,14 @@ import { MECHANISMS, type MechanismId } from "../data";
 
 export function Header({ sessionCount }: { sessionCount: number }) {
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-linen/80 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-[#C2CBD4] bg-[#E4E8EC]/80 backdrop-blur-md">
       <div className="max-w-5xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between gap-4">
         <a href="#" className="flex items-baseline gap-2">
-          <span className="font-display text-[26px] text-espresso">Microshift</span>
+          <span className="font-display text-[26px] text-[#17202A]">Microshift</span>
         </a>
         <div className="flex items-center gap-3">
           {sessionCount > 0 && (
-            <span className="mono-label text-taupe border border-border rounded-full px-3 py-1">
+            <span className="mono-label text-[#4A5868] border border-[#C2CBD4] rounded-full px-3 py-1">
               {sessionCount} session{sessionCount === 1 ? "" : "s"} logged
             </span>
           )}
@@ -34,15 +34,15 @@ export function Reveal({ children, className = "", delay = 0 }: { children: Reac
   );
 }
 
-export function SectionHead({ tag, title, desc, color = "#1A1918" }: { tag: string; title: ReactNode; desc?: string; color?: string }) {
+export function SectionHead({ tag, title, desc, color = "#17202A" }: { tag: string; title: ReactNode; desc?: string; color?: string }) {
   return (
     <div className="max-w-2xl mb-10">
       <p className="mono-label flex items-center gap-2">
         <span className="inline-block w-2 h-2 rounded-full" style={{ background: color }} />
         {tag}
       </p>
-      <h2 className="font-display text-espresso mt-3 leading-[1.1] text-3xl sm:text-4xl lg:text-5xl">{title}</h2>
-      {desc && <p className="text-taupe mt-4 text-[15px] leading-relaxed">{desc}</p>}
+      <h2 className="font-display text-[#17202A] mt-3 leading-[1.1] text-3xl sm:text-4xl lg:text-5xl">{title}</h2>
+      {desc && <p className="text-[#4A5868] mt-4 text-[15px] leading-relaxed">{desc}</p>}
     </div>
   );
 }
@@ -51,10 +51,10 @@ export function MechTag({ id, small = false }: { id: MechanismId; small?: boolea
   const m = MECHANISMS[id];
   return (
     <span
-      className={`inline-flex items-center gap-1.5 rounded-full border font-mono uppercase tracking-[0.1em] ${small ? "text-[10px] px-2 py-0.5" : "text-[11px] px-3 py-1"}`}
-      style={{ color: m.color, borderColor: `${m.color}55`, background: `${m.color}18` }}
+      className={`inline-flex items-center gap-1.5 rounded-full font-mono uppercase tracking-[0.1em] ${small ? "text-[10px] px-2.5 py-1" : "text-[11px] px-3 py-1.5"}`}
+      style={{ color: "#17202A", background: m.color, border: `1px solid ${m.color}` }}
     >
-      <span className="w-1.5 h-1.5 rounded-full" style={{ background: m.color }} />
+      <span className="w-1.5 h-1.5 rounded-full" style={{ background: "#17202A", opacity: 0.5 }} />
       {m.label}
     </span>
   );
@@ -75,26 +75,26 @@ export const Arrow = ({ className = "w-4 h-4" }: { className?: string }) => (
 
 export function Footer() {
   return (
-    <footer className="border-t border-border mt-24">
+    <footer className="border-t border-[#C2CBD4] mt-24">
       <div className="max-w-5xl mx-auto px-5 sm:px-8 py-16 grid gap-10 md:grid-cols-2">
         <div>
-          <p className="font-display text-2xl text-espresso">Microshift</p>
-          <p className="text-taupe text-sm mt-3 leading-relaxed max-w-xs">
+          <p className="font-display text-2xl text-[#17202A]">Microshift</p>
+          <p className="text-[#4A5868] text-sm mt-3 leading-relaxed max-w-xs">
             Evidence-based emotional regulation for everyday modern stress. Not therapy, not a diagnosis,
             not another chatbot — just a better ten minutes.
           </p>
         </div>
         <div>
           <p className="mono-label mb-3">if it's bigger than a bad day</p>
-          <div className="panel p-4">
-            <p className="text-sm text-espresso leading-relaxed">
-              <span className="text-[#E8C4B8] font-medium">India:</span>{" "}
-              <a href="tel:9152987821" className="underline decoration-[#E8C4B8]/40 hover:text-[#E8C4B8] transition-colors">
+          <div className="panel p-4" style={{ background: "#D4B4A820" }}>
+            <p className="text-sm text-[#17202A] leading-relaxed">
+              <span className="text-[#17202A] font-medium">India:</span>{" "}
+              <a href="tel:9152987821" className="underline hover:text-[#17202A] transition-colors">
                 iCall: 9152987821
               </a>
               <br />
-              <span className="text-[#E8C4B8] font-medium">Vandrevala Foundation:</span>{" "}
-              <a href="tel:18602662345" className="underline decoration-[#E8C4B8]/40 hover:text-[#E8C4B8] transition-colors">
+              <span className="text-[#17202A] font-medium">Vandrevala Foundation:</span>{" "}
+              <a href="tel:18602662345" className="underline hover:text-[#17202A] transition-colors">
                 1860-2662-345
               </a>
             </p>
