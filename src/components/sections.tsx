@@ -28,7 +28,7 @@ export function Science() {
             cognitive behavioral therapy, and mindfulness-based interventions. We've distilled decades of clinical research 
             into 2-5 minute micro-interventions that actually fit into your day.
           </p>
-          <a href="/science" className="btn-main px-6 py-2.5 text-sm inline-flex items-center gap-2">
+          <a href="#/science" className="btn-main px-6 py-2.5 text-sm inline-flex items-center gap-2">
             view the research <Arrow className="w-4 h-4" />
           </a>
         </div>
