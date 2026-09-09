@@ -6,25 +6,17 @@ import { MECHANISMS, type MechanismId } from "../data";
 
 export function Header({ sessionCount }: { sessionCount: number }) {
   return (
-    <header className="sticky top-0 z-50 border-b border-border/60 bg-cream/90 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-black/50 backdrop-blur-md">
       <div className="max-w-5xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between gap-4">
         <a href="#" className="flex items-baseline gap-2">
-          <span className="font-display text-[26px] text-ink">ppis</span>
-          <span className="mono-label hidden sm:block">micro-interventions</span>
+          <span className="font-display text-[26px] text-white">Microshift</span>
         </a>
         <div className="flex items-center gap-3">
           {sessionCount > 0 && (
-            <span className="mono-label text-ink-muted border border-border rounded-full px-3 py-1">
+            <span className="mono-label text-zinc-400 border border-white/10 rounded-full px-3 py-1">
               {sessionCount} session{sessionCount === 1 ? "" : "s"} logged
             </span>
           )}
-          <span className="hidden md:flex items-center gap-1.5 mono-label text-amber">
-            <span className="relative flex w-2 h-2">
-              <span className="pulse-ring absolute inline-flex w-full h-full rounded-full bg-amber" />
-              <span className="relative inline-flex w-2 h-2 rounded-full bg-amber" />
-            </span>
-            crisis? 988
-          </span>
         </div>
       </div>
     </header>
@@ -42,15 +34,15 @@ export function Reveal({ children, className = "", delay = 0 }: { children: Reac
   );
 }
 
-export function SectionHead({ tag, title, desc, color = "#1a1a1a" }: { tag: string; title: ReactNode; desc?: string; color?: string }) {
+export function SectionHead({ tag, title, desc, color = "#ffffff" }: { tag: string; title: ReactNode; desc?: string; color?: string }) {
   return (
     <div className="max-w-2xl mb-10">
       <p className="mono-label flex items-center gap-2">
         <span className="inline-block w-2 h-2 rounded-full" style={{ background: color }} />
         {tag}
       </p>
-      <h2 className="font-display text-ink mt-3 leading-[1.1] text-3xl sm:text-4xl lg:text-5xl">{title}</h2>
-      {desc && <p className="text-ink-light mt-4 text-[15px] leading-relaxed">{desc}</p>}
+      <h2 className="font-display text-white mt-3 leading-[1.1] text-3xl sm:text-4xl lg:text-5xl">{title}</h2>
+      {desc && <p className="text-zinc-400 mt-4 text-[15px] leading-relaxed">{desc}</p>}
     </div>
   );
 }
@@ -60,7 +52,7 @@ export function MechTag({ id, small = false }: { id: MechanismId; small?: boolea
   return (
     <span
       className={`inline-flex items-center gap-1.5 rounded-full border font-mono uppercase tracking-[0.1em] ${small ? "text-[10px] px-2 py-0.5" : "text-[11px] px-3 py-1"}`}
-      style={{ color: m.color, borderColor: `${m.color}44`, background: `${m.color}10` }}
+      style={{ color: m.color, borderColor: `${m.color}44`, background: `${m.color}15` }}
     >
       <span className="w-1.5 h-1.5 rounded-full" style={{ background: m.color }} />
       {m.label}
@@ -81,13 +73,13 @@ export const Arrow = ({ className = "w-4 h-4" }: { className?: string }) => (
 
 /* ---------------- footer ---------------- */
 
-export function Footer({ citations }: { citations: string[] }) {
+export function Footer() {
   return (
-    <footer className="border-t border-border mt-24">
-      <div className="max-w-5xl mx-auto px-5 sm:px-8 py-16 grid gap-10 md:grid-cols-3">
+    <footer className="border-t border-white/10 mt-24">
+      <div className="max-w-5xl mx-auto px-5 sm:px-8 py-16 grid gap-10 md:grid-cols-2">
         <div>
-          <p className="font-display text-2xl text-ink">ppis</p>
-          <p className="text-ink-light text-sm mt-3 leading-relaxed max-w-xs">
+          <p className="font-display text-2xl text-white">Microshift</p>
+          <p className="text-zinc-400 text-sm mt-3 leading-relaxed max-w-xs">
             Evidence-based emotional regulation for everyday modern stress. Not therapy, not a diagnosis,
             not another chatbot — just a better ten minutes.
           </p>
@@ -95,12 +87,15 @@ export function Footer({ citations }: { citations: string[] }) {
         <div>
           <p className="mono-label mb-3">if it's bigger than a bad day</p>
           <div className="panel p-4">
-            <p className="text-sm text-ink leading-relaxed">
-              <span className="text-amber font-medium">US:</span> call or text <span className="font-mono">988</span> · text <span className="font-mono">HOME</span> to <span className="font-mono">741741</span>
+            <p className="text-sm text-white leading-relaxed">
+              <span className="text-amber font-medium">India:</span>{" "}
+              <a href="tel:9152987821" className="underline decoration-amber/40 hover:text-amber transition-colors">
+                iCall: 9152987821
+              </a>
               <br />
-              <span className="text-amber font-medium">Elsewhere:</span>{" "}
-              <a href="https://findahelpline.com" target="_blank" rel="noreferrer" className="underline decoration-amber/40 hover:text-amber transition-colors">
-                findahelpline.com
+              <span className="text-amber font-medium">Vandrevala Foundation:</span>{" "}
+              <a href="tel:18602662345" className="underline decoration-amber/40 hover:text-amber transition-colors">
+                1860-2662-345
               </a>
             </p>
             <p className="mono-label mt-3 normal-case tracking-normal text-[11px]">
@@ -108,19 +103,6 @@ export function Footer({ citations }: { citations: string[] }) {
             </p>
           </div>
         </div>
-        <div>
-          <p className="mono-label mb-3">standing on the shoulders of</p>
-          <ul className="space-y-2">
-            {citations.map((c) => (
-              <li key={c} className="text-[12px] font-mono text-ink-muted leading-snug">
-                <span className="text-sage">▸</span> {c}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-      <div className="border-t border-border py-5 text-center mono-label">
-        ppis · made for monkey brains with modern problems · {new Date().getFullYear()}
       </div>
     </footer>
   );
