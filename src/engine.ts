@@ -17,6 +17,11 @@ const LEX: Record<MechanismId, string[]> = {
     "numb", "empty", "blah", "foggy", "fog", "fuzzy", "weird feeling", "meh",
     "can't tell", "cant tell", "mixed feelings", "no idea", "don't know", "dont know",
   ],
+  affect: [
+    "bored", "boring", "flat", "nothing feels good", "no joy", "joyless", "can't enjoy",
+    "cant enjoy", "anhedon", "rut", "drained", "burned out", "burnt out", "burnout",
+    "nothing is fun", "used to love", "grey", "gray", "colorless", "routine",
+  ],
   agency: [
     "stuck", "helpless", "powerless", "no control", "out of my control", "trapped",
     "nothing i do", "can't do anything", "cant do anything", "can't decide", "cant decide",
@@ -24,11 +29,6 @@ const LEX: Record<MechanismId, string[]> = {
     "cant start", "avoiding", "can't focus", "cant focus", "can't concentrate",
     "unmotivat", "no motivation", "lazy", "failing", "failed", "overdue", "pile",
     "too many", "behind",
-  ],
-  affect: [
-    "bored", "boring", "flat", "nothing feels good", "no joy", "joyless", "can't enjoy",
-    "cant enjoy", "anhedon", "rut", "drained", "burned out", "burnt out", "burnout",
-    "nothing is fun", "used to love", "grey", "gray", "colorless", "routine",
   ],
   self: [
     "not good enough", "imposter", "impostor", "fraud", "failure", "loser", "hate myself",
@@ -67,8 +67,8 @@ const TRIED_UNHEALTHY = ["doomscroll", "doom scroll", "scrolled", "scrolling", "
 const HEADLINES: Record<MechanismId, string> = {
   safety: "Your alarm system is switched on.",
   clarity: "First, let's name the thing.",
-  agency: "Your sense of control took a hit today.",
   affect: "The good-feeling tank is running low.",
+  agency: "Your sense of control took a hit today.",
   self: "The inner critic has the mic right now.",
   connection: "This one is about disconnection.",
   meaning: "You're underfed on meaning — not broken.",
@@ -77,8 +77,8 @@ const HEADLINES: Record<MechanismId, string> = {
 const MESSAGES: Record<MechanismId, string> = {
   safety: "Heart, breath, racing thoughts — your body thinks there's a tiger in the room. There isn't, but your nervous system can't read that memo yet. Nothing else will land until this settles, so we start with the fastest lever: the breath.",
   clarity: "You're flooded, and the feeling has no name yet — that's what makes it feel infinite. Naming a feeling measurably lowers the brain's alarm response. We'll pin it down first; matching the right tool comes after.",
-  agency: "The ache isn't the task itself — it's feeling like the wheel slipped out of your hands. So we're not doing motivation. We're doing ownership: sort what's yours from what isn't, then take back one small lever.",
   affect: "When the positivity reservoir runs dry, the whole day reads as gray — that's a signal, not a personality. We're going to log a few real, small goods. Not toxic positivity. Just accurate bookkeeping.",
+  agency: "The ache isn't the task itself — it's feeling like the wheel slipped out of your hands. So we're not doing motivation. We're doing ownership: sort what's yours from what isn't, then take back one small lever.",
   self: "Somewhere between the situation and now, the critic grabbed the microphone and started taking questions. It's lying by omission. We're borrowing the voice you already use for people you love — and aiming it inward.",
   connection: "Your nervous system reads disconnection as danger, which is why this feels bigger than it is. One tiny bridge to another human downshifts the alarm on both ends. Two minutes, tops.",
   meaning: "This isn't emptiness — it's a zoom problem. Today is too close to the lens. We'll write from a year out, where this becomes a chapter instead of the whole book, then borrow one move from that future person.",
@@ -95,7 +95,7 @@ export interface Inference {
   gateNote: string | null;
   headline: string;
   message: string;
-  arousal: number; // 0..1
+  arousal: number;
   interventionId: string;
 }
 
@@ -135,7 +135,7 @@ export function infer(raw: string): Inference {
   let gateNote: string | null = null;
   let alt: MechanismId | null = null;
 
-  const growthOrder = (["agency", "affect", "self", "connection", "meaning"] as MechanismId[])
+  const growthOrder = (["affect", "agency", "self", "connection", "meaning"] as MechanismId[])
     .map((m) => ({ m, s: scores[m] }))
     .sort((a, b) => b.s - a.s);
   const bestGrowth = growthOrder[0].s > 0 ? growthOrder[0].m : null;
@@ -183,10 +183,25 @@ export const mechanismName = (id: MechanismId) => MECHANISMS[id].label;
 export function pickIntervention(mechanism: MechanismId, raw: string, highArousal = false): string {
   const text = raw.toLowerCase();
   if (mechanism === "safety") {
-    return /sleep|insomnia|3 ?am|night/.test(text) || highArousal ? "sigh" : "senses";
+    return /sleep|insomnia|3 ?am|night/.test(text) || highArousal ? "sigh" : "grounding";
   }
   if (mechanism === "clarity") {
-    return /numb|can't tell|cant tell|don't know|dont know|blah|fog/.test(text) ? "label" : "unclench";
+    return /numb|can't tell|cant tell|don't know|dont know|blah|fog/.test(text) ? "label" : "bodyscan";
   }
-  return { agency: "control", affect: "gratitude", self: "compassion", connection: "reachout", meaning: "future" }[mechanism];
+  if (mechanism === "affect") {
+    return /food|eat|taste|smell|music|song|view|sunset|walk/.test(text) ? "savor" : "gratitude";
+  }
+  if (mechanism === "agency") {
+    return /hopeless|confident|upcoming|event|presentation/.test(text) ? "bestself" : "smallwin";
+  }
+  if (mechanism === "self") {
+    return /only one|broken|wrong with me|isolat/.test(text) ? "humanity" : "compassion";
+  }
+  if (mechanism === "connection") {
+    return /no one|nobody|cold|empty/.test(text) ? "lovingkindness" : "reachout";
+  }
+  if (mechanism === "meaning") {
+    return /point|why|loop|ruminat/.test(text) ? "silverlining" : "values";
+  }
+  return "gratitude";
 }
