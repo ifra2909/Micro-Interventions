@@ -42,7 +42,7 @@ export function BreathOrb({ color, speed = 7, size = 200, label, sub, scale, pha
         />
         {(label || phaseLabel) && (
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
-            <span className="font-body font-medium text-espresso text-sm tracking-wide">
+            <span className="font-body font-medium text-[#17202A] text-sm tracking-wide">
               {phaseLabel ?? label}
             </span>
             {sub && !guided && <span className="mono-label mt-1">{sub}</span>}

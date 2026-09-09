@@ -47,18 +47,18 @@ export function BreathWidget({ onProgress }: WidgetProps) {
   return (
     <div className="flex flex-col items-center gap-5 py-4">
       <div className="relative w-40 h-40 flex items-center justify-center">
-        <span className="pulse-ring absolute inset-0 rounded-full border border-[#B8D4C8]/30" />
+        <span className="pulse-ring absolute inset-0 rounded-full border border-[#A8C4BC]/30" />
         <div
           className="w-28 h-28 rounded-full"
           style={{
-            background: "radial-gradient(circle at 35% 30%, #B8D4C8cc, #B8D4C855 55%, #B8D4C81a)",
-            boxShadow: "0 0 40px #B8D4C830, inset 0 -8px 20px rgba(0,0,0,0.08)",
+            background: "radial-gradient(circle at 35% 30%, #A8C4BCcc, #A8C4BC55 55%, #A8C4BC1a)",
+            boxShadow: "0 0 40px #A8C4BC30, inset 0 -8px 20px rgba(0,0,0,0.08)",
             transform: `scale(${running || round > 0 || done ? p.scale : 1})`,
             transition: `transform ${p.dur}s cubic-bezier(0.45, 0, 0.35, 1)`,
           }}
         />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
-          <span className="font-body font-medium text-espresso text-sm px-4">{done ? "well done" : running ? p.label : "ready when you are"}</span>
+          <span className="font-body font-medium text-[#17202A] text-sm px-4">{done ? "well done" : running ? p.label : "ready when you are"}</span>
           <span className="mono-label mt-1">round {Math.min(round + (done ? 0 : 1), TARGET_ROUNDS)} / {TARGET_ROUNDS}</span>
         </div>
       </div>
@@ -73,7 +73,7 @@ export function BreathWidget({ onProgress }: WidgetProps) {
             skip
           </button>
         )}
-        {done && <p className="font-mono text-sage text-sm">✓ nervous system: notified</p>}
+        {done && <p className="font-mono text-[#A8C4BC] text-sm">✓ nervous system: notified</p>}
       </div>
     </div>
   );
@@ -82,11 +82,11 @@ export function BreathWidget({ onProgress }: WidgetProps) {
 /* ---------------- affect labeling ---------------- */
 
 const LABEL_BOARD: { word: string; color: string }[] = [
-  { word: "anxious", color: "#B8C9D9" }, { word: "overwhelmed", color: "#B8D4C8" }, { word: "sad", color: "#B8C9D9" }, { word: "angry", color: "#E8C4B8" },
-  { word: "ashamed", color: "#D9B8B8" }, { word: "lonely", color: "#C8B8D9" }, { word: "numb", color: "#C4B8D4" }, { word: "exhausted", color: "#E8D4B8" },
-  { word: "guilty", color: "#D9B8B8" }, { word: "scared", color: "#B8C9D9" }, { word: "resentful", color: "#E8C4B8" }, { word: "empty", color: "#C4B8D4" },
-  { word: "embarrassed", color: "#D9B8B8" }, { word: "worried", color: "#B8C9D9" }, { word: "frustrated", color: "#E8C4B8" }, { word: "drained", color: "#E8D4B8" },
-  { word: "left out", color: "#C8B8D9" }, { word: "dreading", color: "#B8C9D9" }, { word: "inadequate", color: "#D9B8B8" }, { word: "flat", color: "#C4B8D4" },
+  { word: "anxious", color: "#A8B8C8" }, { word: "overwhelmed", color: "#A8C4BC" }, { word: "sad", color: "#A8B8C8" }, { word: "angry", color: "#D4B4A8" },
+  { word: "ashamed", color: "#C8A8A8" }, { word: "lonely", color: "#B8A8C8" }, { word: "numb", color: "#B4A8C0" }, { word: "exhausted", color: "#D4C4A8" },
+  { word: "guilty", color: "#C8A8A8" }, { word: "scared", color: "#A8B8C8" }, { word: "resentful", color: "#D4B4A8" }, { word: "empty", color: "#B4A8C0" },
+  { word: "embarrassed", color: "#C8A8A8" }, { word: "worried", color: "#A8B8C8" }, { word: "frustrated", color: "#D4B4A8" }, { word: "drained", color: "#D4C4A8" },
+  { word: "left out", color: "#B8A8C8" }, { word: "dreading", color: "#A8B8C8" }, { word: "inadequate", color: "#C8A8A8" }, { word: "flat", color: "#B4A8C0" },
 ];
 
 export function LabelWidget({ onProgress }: WidgetProps) {
@@ -137,15 +137,15 @@ export function LabelWidget({ onProgress }: WidgetProps) {
       <div>
         <p className="mono-label mb-2">finish the sentence — one line is plenty</p>
         <div className="inset-screen p-4">
-          <p className="text-sm text-taupe mb-2 font-mono">
-            right now I feel <span className="text-[#8BA7B8]">{picked.length ? picked.join(" + ") : "…"}</span>
+          <p className="text-sm text-[#4A5868] mb-2 font-mono">
+            right now I feel <span className="text-[#A8B8C8]">{picked.length ? picked.join(" + ") : "…"}</span>
           </p>
           <textarea
             value={because}
             onChange={(e) => setBecause(e.target.value)}
             rows={2}
             placeholder="because…"
-            className="w-full bg-transparent border-b border-border focus:border-[#8BA7B8] outline-none text-espresso text-sm resize-none placeholder:text-taupe transition-colors"
+            className="w-full bg-transparent border-b border-[#C2CBD4] focus:border-[#A8B8C8] outline-none text-[#17202A] text-sm resize-none placeholder:text-[#4A5868] transition-colors"
           />
         </div>
       </div>
@@ -184,8 +184,8 @@ export function ChecklistWidget({ intervention, onProgress }: WidgetProps) {
                   }}
                   className={`px-3.5 py-2 rounded-full border text-sm transition-all duration-200 ${
                     on
-                      ? "bg-sage/10 border-sage/50 text-sage"
-                      : "border-border text-taupe hover:border-sage/40 hover:text-espresso"
+                      ? "bg-[#A8C4BC]/10 border-[#A8C4BC]/50 text-[#A8C4BC]"
+                      : "border-[#C2CBD4] text-[#4A5868] hover:border-[#A8C4BC]/40 hover:text-[#17202A]"
                   }`}
                 >
                   {on ? "✓ " : ""}{item}
@@ -217,8 +217,8 @@ export function BodyScanWidget({ onProgress }: WidgetProps) {
   return (
     <div className="space-y-4 py-2">
       <div>
-        <p className="mono-label mb-2">scan area {area + 1} of {BODY_AREAS.length}: <span className="text-espresso normal-case tracking-normal">{BODY_AREAS[area]}</span></p>
-        <p className="text-sm text-taupe mb-3">what do you notice? tight, warm, heavy, buzzing, numb, or neutral?</p>
+        <p className="mono-label mb-2">scan area {area + 1} of {BODY_AREAS.length}: <span className="text-[#17202A] normal-case tracking-normal">{BODY_AREAS[area]}</span></p>
+        <p className="text-sm text-[#4A5868] mb-3">what do you notice? tight, warm, heavy, buzzing, numb, or neutral?</p>
         <div className="flex flex-wrap gap-2">
           {SENSATIONS.map((s) => (
             <button
@@ -226,8 +226,8 @@ export function BodyScanWidget({ onProgress }: WidgetProps) {
               onClick={() => setSensation(s)}
               className={`px-3.5 py-1.5 rounded-full border text-sm transition-all ${
                 sensation === s
-                  ? "bg-sage/10 border-sage/50 text-sage"
-                  : "border-border text-taupe hover:border-sage/40"
+                  ? "bg-[#A8C4BC]/10 border-[#A8C4BC]/50 text-[#A8C4BC]"
+                  : "border-[#C2CBD4] text-[#4A5868] hover:border-[#A8C4BC]/40"
               }`}
             >
               {s}
@@ -244,7 +244,7 @@ export function BodyScanWidget({ onProgress }: WidgetProps) {
                 key={b}
                 onClick={() => setBreaths(b)}
                 className={`w-10 h-10 rounded-full border flex items-center justify-center text-sm font-mono transition-all ${
-                  breaths >= b ? "bg-sage/10 border-sage/50 text-sage" : "border-border text-taupe"
+                  breaths >= b ? "bg-[#A8C4BC]/10 border-[#A8C4BC]/50 text-[#A8C4BC]" : "border-[#C2CBD4] text-[#4A5868]"
                 }`}
               >
                 {b}
@@ -257,7 +257,7 @@ export function BodyScanWidget({ onProgress }: WidgetProps) {
             </button>
           )}
           {area === BODY_AREAS.length - 1 && breaths >= 3 && (
-            <p className="font-mono text-sage text-sm">✓ scan complete</p>
+            <p className="font-mono text-[#A8C4BC] text-sm">✓ scan complete</p>
           )}
         </div>
       )}
@@ -284,19 +284,19 @@ export function GratitudeWidget({ onProgress }: WidgetProps) {
       {rows.map((r, i) => (
         <div key={i} className="inset-screen p-3.5">
           <p className="mono-label mb-2">
-            <span className="text-terracotta">good thing #{i + 1}</span>
+            <span className="text-[#D4B4A8]">good thing #{i + 1}</span>
           </p>
           <input
             value={r.what}
             onChange={(e) => setRows(rows.map((x, j) => (j === i ? { ...x, what: e.target.value } : x)))}
             placeholder="anything remotely good — the bar is on the floor"
-            className="w-full bg-transparent text-espresso text-sm outline-none placeholder:text-taupe"
+            className="w-full bg-transparent text-[#17202A] text-sm outline-none placeholder:text-[#4A5868]"
           />
           <input
             value={r.why}
             onChange={(e) => setRows(rows.map((x, j) => (j === i ? { ...x, why: e.target.value } : x)))}
             placeholder="why did it happen? (take some credit)"
-            className="w-full bg-transparent text-taupe text-[13px] outline-none placeholder:text-taupe mt-2 border-t border-border pt-2"
+            className="w-full bg-transparent text-[#4A5868] text-[13px] outline-none placeholder:text-[#4A5868] mt-2 border-t border-[#C2CBD4] pt-2"
           />
         </div>
       ))}
@@ -330,22 +330,22 @@ export function SavorWidget({ onProgress }: WidgetProps) {
           value={thing}
           onChange={(e) => setThing(e.target.value)}
           placeholder="e.g. this cup of tea, the sunlight, a song playing…"
-          className="w-full inset-screen p-4 bg-transparent text-espresso text-sm outline-none placeholder:text-taupe"
+          className="w-full inset-screen p-4 bg-transparent text-[#17202A] text-sm outline-none placeholder:text-[#4A5868]"
         />
       </div>
       {thing.trim() && !done && (
         <div className="pop-in text-center">
           <div className="relative w-32 h-32 mx-auto mb-4">
-            <div className="absolute inset-0 rounded-full border-4 border-border" />
+            <div className="absolute inset-0 rounded-full border-4 border-[#C2CBD4]" />
             <div
-              className="absolute inset-0 rounded-full border-4 border-sage"
+              className="absolute inset-0 rounded-full border-4 border-[#A8C4BC]"
               style={{ clipPath: `polygon(50% 50%, 50% 0%, ${timer >= 15 ? "100% 0%" : "50% 0%"} ${timer >= 15 ? (timer >= 30 ? "100% 100%" : `${50 + (timer - 15) / 15 * 50}% 100%`) : "50% 0%"})` }}
             />
             <div className="absolute inset-0 flex items-center justify-center">
-              <span className="font-display text-3xl text-espresso">{60 - timer}s</span>
+              <span className="font-display text-3xl text-[#17202A]">{60 - timer}s</span>
             </div>
           </div>
-          <p className="text-sm text-taupe">give it your full attention. if your mind wanders, gently return.</p>
+          <p className="text-sm text-[#4A5868]">give it your full attention. if your mind wanders, gently return.</p>
           {timer >= 60 && (
             <button onClick={() => setDone(true)} className="btn-main px-6 py-2.5 text-sm mt-4">
               that was good ✓
@@ -353,7 +353,7 @@ export function SavorWidget({ onProgress }: WidgetProps) {
           )}
         </div>
       )}
-      {done && <p className="font-mono text-sage text-sm text-center">✓ you just stretched one small good moment</p>}
+      {done && <p className="font-mono text-[#A8C4BC] text-sm text-center">✓ you just stretched one small good moment</p>}
     </div>
   );
 }
@@ -382,7 +382,7 @@ export function SmallWinWidget({ onProgress }: WidgetProps) {
       </div>
       {task.trim() && !done && (
         <div className="pop-in text-center">
-          <p className="text-sm text-taupe mb-4">do that one thing — fully, right now. then come back.</p>
+          <p className="text-sm text-[#4A5868] mb-4">do that one thing — fully, right now. then come back.</p>
           <button onClick={() => setDone(true)} className="btn-main px-6 py-2.5 text-sm">
             i did it ✓
           </button>
@@ -390,8 +390,8 @@ export function SmallWinWidget({ onProgress }: WidgetProps) {
       )}
       {done && (
         <div className="pop-in inset-screen p-5 text-center">
-          <p className="font-display text-xl text-espresso mb-2">"I did that. I made something happen."</p>
-          <p className="font-mono text-sage text-sm">✓ competence signal: received</p>
+          <p className="font-display text-xl text-[#17202A] mb-2">"I did that. I made something happen."</p>
+          <p className="font-mono text-[#A8C4BC] text-sm">✓ competence signal: received</p>
         </div>
       )}
     </div>
@@ -412,8 +412,8 @@ export function BestSelfWidget({ onProgress }: WidgetProps) {
 
   const field = (label: string, val: string, set: (v: string) => void, ph: string) => (
     <div className="inset-screen p-3.5">
-      <p className="mono-label mb-2 text-terracotta">{label}</p>
-      <textarea value={val} onChange={(e) => set(e.target.value)} rows={2} placeholder={ph} className="w-full bg-transparent text-espresso text-sm outline-none resize-none placeholder:text-taupe" />
+      <p className="mono-label mb-2 text-[#D4B4A8]">{label}</p>
+      <textarea value={val} onChange={(e) => set(e.target.value)} rows={2} placeholder={ph} className="w-full bg-transparent text-[#17202A] text-sm outline-none resize-none placeholder:text-[#4A5868]" />
     </div>
   );
 
@@ -441,10 +441,10 @@ export function CompassionWidget({ onProgress }: WidgetProps) {
     <button
       onClick={onClick}
       className={`w-full text-left px-4 py-3 rounded-xl border transition-all duration-200 flex items-center gap-3 ${
-        on ? "bg-[#C28B8B]/10 border-[#C28B8B]/40 text-espresso" : "border-border text-taupe hover:border-[#C28B8B]/30"
+        on ? "bg-[#C8A8A8]/10 border-[#C8A8A8]/40 text-[#17202A]" : "border-[#C2CBD4] text-[#4A5868] hover:border-[#C8A8A8]/30"
       }`}
     >
-      <span className={`w-5 h-5 rounded-full border flex items-center justify-center shrink-0 ${on ? "bg-[#C28B8B] border-[#C28B8B] text-linen" : "border-border"}`}>
+      <span className={`w-5 h-5 rounded-full border flex items-center justify-center shrink-0 ${on ? "bg-[#C8A8A8] border-[#C8A8A8] text-[#E4E8EC]" : "border-[#C2CBD4]"}`}>
         {on && <span className="text-[11px] font-bold">✓</span>}
       </span>
       {label}
@@ -464,13 +464,13 @@ export function CompassionWidget({ onProgress }: WidgetProps) {
           onChange={(e) => setMsg(e.target.value)}
           rows={3}
           placeholder="hey — first of all, that sounds genuinely hard…"
-          className="w-full inset-screen p-4 bg-transparent text-espresso text-sm outline-none resize-none placeholder:text-taupe"
+          className="w-full inset-screen p-4 bg-transparent text-[#17202A] text-sm outline-none resize-none placeholder:text-[#4A5868]"
         />
       </div>
       {msg.trim().length >= 20 && (
-        <div className="pop-in inset-screen p-4 border-[#C28B8B]/20">
-          <p className="mono-label mb-2 text-[#C28B8B]">now read it back — addressed to you</p>
-          <p className="text-[15px] text-espresso leading-relaxed italic">"{msg.trim()}"</p>
+        <div className="pop-in inset-screen p-4 border-[#C8A8A8]/20">
+          <p className="mono-label mb-2 text-[#C8A8A8]">now read it back — addressed to you</p>
+          <p className="text-[15px] text-[#17202A] leading-relaxed italic">"{msg.trim()}"</p>
           <p className="mono-label mt-3">— you, to you. keep that voice on speed dial.</p>
         </div>
       )}
@@ -493,10 +493,10 @@ export function HumanityWidget({ onProgress }: WidgetProps) {
     <button
       onClick={onClick}
       className={`w-full text-left px-4 py-3 rounded-xl border transition-all duration-200 flex items-center gap-3 ${
-        on ? "bg-[#A89BC2]/10 border-[#A89BC2]/40 text-espresso" : "border-border text-taupe hover:border-[#A89BC2]/30"
+        on ? "bg-[#B8A8C8]/10 border-[#B8A8C8]/40 text-[#17202A]" : "border-[#C2CBD4] text-[#4A5868] hover:border-[#B8A8C8]/30"
       }`}
     >
-      <span className={`w-5 h-5 rounded-full border flex items-center justify-center shrink-0 ${on ? "bg-[#A89BC2] border-[#A89BC2] text-linen" : "border-border"}`}>
+      <span className={`w-5 h-5 rounded-full border flex items-center justify-center shrink-0 ${on ? "bg-[#B8A8C8] border-[#B8A8C8] text-[#E4E8EC]" : "border-[#C2CBD4]"}`}>
         {on && <span className="text-[11px] font-bold">✓</span>}
       </span>
       {label}
@@ -598,7 +598,7 @@ export function ReachoutWidget({ onProgress }: WidgetProps) {
               key={w}
               onClick={() => setWho(w)}
               className={`px-3.5 py-1.5 rounded-full border text-sm transition-all ${
-                who === w ? "bg-[#A89BC2]/10 border-[#A89BC2]/50 text-[#A89BC2]" : "border-border text-taupe hover:border-[#A89BC2]/40"
+                who === w ? "bg-[#B8A8C8]/10 border-[#B8A8C8]/50 text-[#B8A8C8]" : "border-[#C2CBD4] text-[#4A5868] hover:border-[#B8A8C8]/40"
               }`}
             >
               {w}
