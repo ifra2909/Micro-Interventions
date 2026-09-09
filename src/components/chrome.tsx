@@ -88,13 +88,13 @@ export function Footer() {
           <p className="mono-label mb-3">if it's bigger than a bad day</p>
           <div className="panel p-4">
             <p className="text-sm text-espresso leading-relaxed">
-              <span className="text-terracotta font-medium">India:</span>{" "}
-              <a href="tel:9152987821" className="underline decoration-terracotta/40 hover:text-terracotta transition-colors">
+              <span className="text-[#E8C4B8] font-medium">India:</span>{" "}
+              <a href="tel:9152987821" className="underline decoration-[#E8C4B8]/40 hover:text-[#E8C4B8] transition-colors">
                 iCall: 9152987821
               </a>
               <br />
-              <span className="text-terracotta font-medium">Vandrevala Foundation:</span>{" "}
-              <a href="tel:18602662345" className="underline decoration-terracotta/40 hover:text-terracotta transition-colors">
+              <span className="text-[#E8C4B8] font-medium">Vandrevala Foundation:</span>{" "}
+              <a href="tel:18602662345" className="underline decoration-[#E8C4B8]/40 hover:text-[#E8C4B8] transition-colors">
                 1860-2662-345
               </a>
             </p>

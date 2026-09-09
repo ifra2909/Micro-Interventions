@@ -47,12 +47,12 @@ export function BreathWidget({ onProgress }: WidgetProps) {
   return (
     <div className="flex flex-col items-center gap-5 py-4">
       <div className="relative w-40 h-40 flex items-center justify-center">
-        <span className="pulse-ring absolute inset-0 rounded-full border border-sage/30" />
+        <span className="pulse-ring absolute inset-0 rounded-full border border-[#B8D4C8]/30" />
         <div
           className="w-28 h-28 rounded-full"
           style={{
-            background: "radial-gradient(circle at 35% 30%, #7BA89Fcc, #7BA89F55 55%, #7BA89F1a)",
-            boxShadow: "0 0 40px #7BA89F30, inset 0 -8px 20px rgba(0,0,0,0.08)",
+            background: "radial-gradient(circle at 35% 30%, #B8D4C8cc, #B8D4C855 55%, #B8D4C81a)",
+            boxShadow: "0 0 40px #B8D4C830, inset 0 -8px 20px rgba(0,0,0,0.08)",
             transform: `scale(${running || round > 0 || done ? p.scale : 1})`,
             transition: `transform ${p.dur}s cubic-bezier(0.45, 0, 0.35, 1)`,
           }}
@@ -82,11 +82,11 @@ export function BreathWidget({ onProgress }: WidgetProps) {
 /* ---------------- affect labeling ---------------- */
 
 const LABEL_BOARD: { word: string; color: string }[] = [
-  { word: "anxious", color: "#8BA7B8" }, { word: "overwhelmed", color: "#7BA89F" }, { word: "sad", color: "#8BA7B8" }, { word: "angry", color: "#C26D53" },
-  { word: "ashamed", color: "#C28B8B" }, { word: "lonely", color: "#A89BC2" }, { word: "numb", color: "#9B8AA6" }, { word: "exhausted", color: "#C9A876" },
-  { word: "guilty", color: "#C28B8B" }, { word: "scared", color: "#8BA7B8" }, { word: "resentful", color: "#C26D53" }, { word: "empty", color: "#9B8AA6" },
-  { word: "embarrassed", color: "#C28B8B" }, { word: "worried", color: "#8BA7B8" }, { word: "frustrated", color: "#C26D53" }, { word: "drained", color: "#C9A876" },
-  { word: "left out", color: "#A89BC2" }, { word: "dreading", color: "#8BA7B8" }, { word: "inadequate", color: "#C28B8B" }, { word: "flat", color: "#9B8AA6" },
+  { word: "anxious", color: "#B8C9D9" }, { word: "overwhelmed", color: "#B8D4C8" }, { word: "sad", color: "#B8C9D9" }, { word: "angry", color: "#E8C4B8" },
+  { word: "ashamed", color: "#D9B8B8" }, { word: "lonely", color: "#C8B8D9" }, { word: "numb", color: "#C4B8D4" }, { word: "exhausted", color: "#E8D4B8" },
+  { word: "guilty", color: "#D9B8B8" }, { word: "scared", color: "#B8C9D9" }, { word: "resentful", color: "#E8C4B8" }, { word: "empty", color: "#C4B8D4" },
+  { word: "embarrassed", color: "#D9B8B8" }, { word: "worried", color: "#B8C9D9" }, { word: "frustrated", color: "#E8C4B8" }, { word: "drained", color: "#E8D4B8" },
+  { word: "left out", color: "#C8B8D9" }, { word: "dreading", color: "#B8C9D9" }, { word: "inadequate", color: "#D9B8B8" }, { word: "flat", color: "#C4B8D4" },
 ];
 
 export function LabelWidget({ onProgress }: WidgetProps) {

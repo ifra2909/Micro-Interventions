@@ -27,7 +27,7 @@ export function SciencePage() {
 
       <Reveal delay={100}>
         <div className="mb-16">
-          <p className="mono-label text-terracotta mb-3">the research</p>
+          <p className="mono-label text-[#E8C4B8] mb-3">the research</p>
           <h1 className="font-display text-espresso leading-[1.1] text-4xl sm:text-5xl lg:text-6xl mb-6">
             14 interventions.<br />
             <em className="italic text-taupe">backed by science.</em>
@@ -129,7 +129,7 @@ export function SciencePage() {
 
       <Reveal>
         <div className="panel p-8 mt-20">
-          <p className="mono-label text-terracotta mb-3">the full picture</p>
+          <p className="mono-label text-[#E8C4B8] mb-3">the full picture</p>
           <h2 className="font-display text-espresso text-2xl sm:text-3xl mb-4">
             standing on the shoulders of
           </h2>

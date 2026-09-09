@@ -18,7 +18,7 @@ export function Science() {
           tag="backed by science"
           title={<>every intervention is<br /><em className="italic text-taupe">research-backed.</em></>}
           desc="14 micro-interventions drawn from peer-reviewed positive psychology research. Each one is a digital adaptation of an empirically tested technique."
-          color="#C26D53"
+          color="#E8C4B8"
         />
       </Reveal>
       <Reveal delay={100}>
@@ -61,7 +61,7 @@ export function IsIsNot() {
         <SectionHead
           tag="Honest disclaimer"
           title={<>what this is.<br /><em className="italic text-taupe">what this isn't.</em></>}
-          color="#7BA89F"
+          color="#B8D4C8"
         />
       </Reveal>
       <div className="grid md:grid-cols-2 gap-5">
@@ -128,7 +128,7 @@ export function Log({ entries, onClear }: { entries: SessionEntry[]; onClear: ()
           tag="your log"
           title={<>patterns beat<br /><em className="italic text-taupe">promises.</em></>}
           desc="Every completed session lands here — stored only in this browser. After a few rounds, your personal deficit profile starts showing up."
-          color="#9B8AA6"
+          color="#C4B8D4"
         />
       </Reveal>
 
@@ -156,7 +156,7 @@ export function Log({ entries, onClear }: { entries: SessionEntry[]; onClear: ()
                   <p className="mono-label mt-0.5">days</p>
                 </div>
                 <div>
-                  <p className="font-display text-4xl" style={{ color: avgDelta <= 0 ? "#7BA89F" : "#C9A876" }}>
+                  <p className="font-display text-4xl" style={{ color: avgDelta <= 0 ? "#B8D4C8" : "#E8D4B8" }}>
                     {avgDelta <= 0 ? `−${Math.abs(avgDelta).toFixed(1)}` : `+${avgDelta.toFixed(1)}`}
                   </p>
                   <p className="mono-label mt-0.5">avg Δ</p>
@@ -220,8 +220,8 @@ export function Log({ entries, onClear }: { entries: SessionEntry[]; onClear: ()
                         className="font-mono text-[10.5px] rounded-full px-2 py-0.5 border shrink-0"
                         style={
                           d <= 0
-                            ? { color: "#7BA89F", borderColor: "#7BA89F44", background: "#7BA89F10" }
-                            : { color: "#C9A876", borderColor: "#C9A87644", background: "#C9A87610" }
+                            ? { color: "#B8D4C8", borderColor: "#B8D4C844", background: "#B8D4C810" }
+                            : { color: "#E8D4B8", borderColor: "#E8D4B844", background: "#E8D4B810" }
                         }
                       >
                         {d <= 0 ? `−${Math.abs(d)}` : `+${d}`}
